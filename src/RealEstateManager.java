@@ -1,12 +1,13 @@
-
+import java.util.Scanner;
 
 public class RealEstateManager {
 	private int maxAccounts;
 	private int maxProperties;
 	private Account[] accountList;
-	private Property [] propertyList;
+	private Property[] propertyList;
 	private int accountNum;
 	private int propertyNum;
+
 	public RealEstateManager(int maxAccounts, int maxProperties) {
 		this.maxAccounts = maxAccounts;
 		this.maxProperties = maxProperties;
@@ -19,32 +20,29 @@ public class RealEstateManager {
 	}
 
 	private void startLogin() {
-		
-			String menu = "Login\nPlease Make a Selection:\n1. Login\n2. Create Account\nTo locate account details \nplease talk to one of our staff";
-			String option = JOptionPane.showInputDialog(menu);
-			while (option != null) {// as long as a user doesn't cancel it the menu will appear
-				if (option.matches("[1-2]")) {// if the input is not 1-4 it is invalid
-					int optionInt = Integer.parseInt(option);
+		Scanner kb = new Scanner(System.in);
+		String menu = "Login\nPlease Make a Selection:\n1. Login\n2. Create Account\nTo locate account details \nplease talk to one of our staff";
+		System.out.println(menu);
+		int option = kb.nextInt();
+		// as long as a user doesn't cancel it the menu will appear
 
-					if (optionInt == 1) {
-						checkLogin();
+		while (option != 3) {
+			if (option == 1) {
+				// checkLogin();
+				System.out.println("you have logged in");
 
-					} else if (optionInt == 2) {
-						createAccount();
+			} else if (option == 2) {
+				// createAccount();
+				System.out.println("create an account");
 
-					} else {
-						JOptionPane.showMessageDialog(null, "Invalid Entry");// if the user enters anything other than 1-4
+			} else {
+				System.out.println("Invalid Entry");// if the user enters anything other than 1-4
 
-					}
-				}
-				
-				option = JOptionPane.showInputDialog(menu);
 			}
+			System.out.println(menu);
+			option = kb.nextInt();
+		}
 
-			return;
-
-		
-		
 	}
 
 	public static void main(String[] args) {
