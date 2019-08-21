@@ -8,8 +8,7 @@ public class Employee extends Account {
 
 	// Employee constructor currently identical to customer more functionality will
 	// be added
-	public Employee(String username, String email, String password, String name, String surname, String phNumber)
-			throws Exception {
+	public Employee(String username, String email, String password, String name, String surname, String phNumber) {
 		super(username, email, password);
 		this.type = "Employee";
 		this.name = name;
