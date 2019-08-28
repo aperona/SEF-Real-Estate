@@ -32,8 +32,8 @@ public class RealEstateManager {
 				System.out.println("you have logged in");
 
 			} else if (option == 2) {
-				// createAccount();
-				System.out.println("create an account");
+				System.out.println("create a customer account");
+				createCustomer();
 
 			} else {
 				System.out.println("Invalid Entry");// if the user enters anything other than 1-4
@@ -43,6 +43,46 @@ public class RealEstateManager {
 			option = kb.nextInt();
 		}
 
+	}
+
+	private void createCustomer() {
+		Scanner kb = new Scanner(System.in);
+		System.out.println("Enter a username");
+		String username = kb.nextLine();
+		System.out.println("Enter a email");
+		String email = kb.nextLine();
+		System.out.println("Enter a password");
+		String password = kb.nextLine();
+		System.out.println("Enter your first name");
+		String name = kb.nextLine();
+		System.out.println("Enter your surname");
+		String surname = kb.nextLine();
+		System.out.println("Enter your phone number");
+		String phNumber = kb.nextLine();
+		System.out.println("Are you a landlord y/n");
+		String option = kb.nextLine();
+		boolean landLord = false;
+		if (option.matches("y")) {
+			landLord = true;
+		}
+		System.out.println("Are you a vendor y/n");
+		option = kb.nextLine();
+		boolean vendor = false;
+		if (option.matches("y")) {
+			vendor = true;
+		}
+		addCustomer(username,email,password,name,surname,phNumber,landLord,vendor);
+		return;
+
+	}
+
+	private void addCustomer(String username, String email, String password, String name, String surname,
+			String phNumber, boolean landLord, boolean vendor) {
+		this.accountList[this.accountNum] = new Customer(username,email,password,name,surname,phNumber,landLord,vendor);
+		this.accountNum += 1;
+
+		return;
+		
 	}
 
 	public static void main(String[] args) {

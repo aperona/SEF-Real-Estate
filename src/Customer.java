@@ -5,14 +5,19 @@ public class Customer extends Account {
 	private String surname;
 	private String phNumber;
 	private String type;
+	private boolean landLord;
+	private boolean vendor;
 
 	// Customer constructor
-	public Customer(String username, String email, String password, String name, String surname, String phNumber) {
+	public Customer(String username, String email, String password, String name, String surname, String phNumber,
+			boolean landLord, boolean vendor) {
 		super(username, email, password);
 		this.type = "Customer";
 		this.name = name;
 		this.surname = surname;
 		this.phNumber = phNumber;
+		this.landLord = landLord;
+		this.vendor = vendor;
 
 	}
 
@@ -26,6 +31,13 @@ public class Customer extends Account {
 
 	public String getPhNumber() {
 		return this.phNumber;
+	}
+	public boolean getLandLord() {
+		return this.landLord;
+	}
+
+	public boolean getVendor() {
+		return this.vendor;
 	}
 
 	public void setType(String type) {
