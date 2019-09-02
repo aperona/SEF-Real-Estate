@@ -28,7 +28,7 @@ public class RealEstateManager {
 		int option = kb.nextInt();
 		// as long as a user doesn't cancel it the menu will appear
 
-		while (option != 3) {
+		while (option != 0) {
 			if (option == 1) {
 				checkLogin();
 				
@@ -83,12 +83,12 @@ public class RealEstateManager {
 
 	private void openMenu() {
 		Scanner kb = new Scanner(System.in);
-		String menu = "Main Menu\nPlease Make a Selection:\n1. Account Management";
+		String menu = "Main Menu\nPlease Make a Selection:\n1. Account Management\nType 0 to log out";
 		System.out.println(menu);
 		int option = kb.nextInt();
 		// as long as a user doesn't cancel it the menu will appear
 
-		while (option != 3) {
+		while (option != 0) {
 			if (option == 1) {
 				checkLogin();
 				
