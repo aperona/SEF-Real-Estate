@@ -7,7 +7,7 @@ public class RealEstateManager {
 	private Property[] propertyList;
 	private int accountNum;
 	private int propertyNum;
-	int accessAccount;//position of the current logged in account on array
+	int accessAccount;// position of the current logged in account on array
 
 	public RealEstateManager(int maxAccounts, int maxProperties) {
 		this.maxAccounts = maxAccounts;
@@ -16,7 +16,7 @@ public class RealEstateManager {
 		this.propertyList = new Property[this.maxProperties];
 		this.accountNum = 0;
 		this.propertyNum = 0;
-		this.accessAccount= 0;
+		this.accessAccount = 0;
 		startLogin();
 		return;
 	}
@@ -31,7 +31,6 @@ public class RealEstateManager {
 		while (option != 0) {
 			if (option == 1) {
 				checkLogin();
-				
 
 			} else if (option == 2) {
 				System.out.println("create a customer account");
@@ -58,20 +57,19 @@ public class RealEstateManager {
 			if ((this.accountList[i]).getUsername().equals(username)
 					&& (this.accountList[i]).getPassword().equals(password)) {
 
-				System.out.println( "Success!");
-				
+				System.out.println("Success!");
+
 				if ((this.accountList[i]) instanceof Customer) {
-					//accessLevel = 0;
+					// accessLevel = 0;
 					accessAccount = i;
 					openMenu();
 
 				}
 				if ((this.accountList[i]) instanceof Employee) {
-					//accessLevel = 1;
+					// accessLevel = 1;
 					accessAccount = i;
 					openMenu();
 				}
-
 
 			}
 
@@ -90,12 +88,31 @@ public class RealEstateManager {
 
 		while (option != 0) {
 			if (option == 1) {
-				checkLogin();
-				
+				accountManager();
 
 			} else if (option == 2) {
-				System.out.println("create a customer account");
-				createCustomer();
+
+			} else {
+				System.out.println("Invalid Entry");// if the user enters anything other than 1-4
+
+			}
+			System.out.println(menu);
+			option = kb.nextInt();
+		}
+
+	}
+
+	private void accountManager() {
+		Scanner kb = new Scanner(System.in);
+		String menu = "Account Management\nPlease Make a Selection:\n1. Apply to be a vendor\nApply to be a landlord\nType 0 to log out";
+		System.out.println(menu);
+		int option = kb.nextInt();
+		// as long as a user doesn't cancel it the menu will appear
+
+		while (option != 0) {
+			if (option == 1) {
+
+			} else if (option == 2) {
 
 			} else {
 				System.out.println("Invalid Entry");// if the user enters anything other than 1-4
@@ -133,18 +150,19 @@ public class RealEstateManager {
 		if (option.matches("y")) {
 			vendor = true;
 		}
-		addCustomer(username,email,password,name,surname,phNumber,landLord,vendor);
+		addCustomer(username, email, password, name, surname, phNumber, landLord, vendor);
 		return;
 
 	}
 
 	private void addCustomer(String username, String email, String password, String name, String surname,
 			String phNumber, boolean landLord, boolean vendor) {
-		this.accountList[this.accountNum] = new Customer(username,email,password,name,surname,phNumber,landLord,vendor);
+		this.accountList[this.accountNum] = new Customer(username, email, password, name, surname, phNumber, landLord,
+				vendor);
 		this.accountNum += 1;
 
 		return;
-		
+
 	}
 
 	public static void main(String[] args) {
