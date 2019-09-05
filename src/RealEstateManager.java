@@ -68,7 +68,7 @@ public class RealEstateManager {
 				if ((this.accountList[i]) instanceof Employee) {
 					// accessLevel = 1;
 					accessAccount = i;
-					openMenu();
+					openEmployeeMenu();
 				}
 
 			}
@@ -77,6 +77,30 @@ public class RealEstateManager {
 		}
 		return;
 
+	}
+
+	private void openEmployeeMenu() {
+		Scanner kb = new Scanner(System.in);
+		String menu = "Employee Menu\nPlease Make a Selection:\n1. Confirm Listings\nType 0 to log out";
+		System.out.println(menu);
+		int option = kb.nextInt();
+		// as long as a user doesn't cancel it the menu will appear
+
+		while (option != 0) {
+			if (option == 1) {
+				accountManager();
+
+			} else if (option == 2) {
+
+			} else {
+				System.out.println("Invalid Entry");// if the user enters anything other than 1-4
+
+			}
+			System.out.println(menu);
+			option = kb.nextInt();
+		}
+
+	}
 	}
 
 	private void openMenu() {
