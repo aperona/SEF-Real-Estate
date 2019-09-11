@@ -7,6 +7,7 @@ public class Sale extends Property {
 	private double commission = (price / 100) * percent;
 	private double offer;
 	private Sale[] forSaleProperties = new Sale[100];
+	private boolean section32;
 	
 	// Constructor for the Sale Object
 	public Sale(String address, String suburb, int bedrooms, int bathrooms, int carSpaces, String type, double price) {
@@ -56,6 +57,16 @@ public class Sale extends Property {
 		this.offer = offer;
 	}
 	
+	// getter for section32 boolean
+		public boolean isSection32() {
+			return section32;
+		}
+
+	// setter for section 32 boolean
+	public void setSection32(boolean section32) {
+		this.section32 = section32;
+	}
+	
 	// Method to change to a property for sale; adds it to array
 	public void makeForSale(Property p, double price) {
 		Sale sale = new Sale(p, price);
@@ -73,6 +84,7 @@ public class Sale extends Property {
 		System.out.println("Did not add to array");
 	}
 	
+	// toString method to display the details for the Sale Object
 	public String toString() {
 		String details = "";
 		details += System.out.printf("%s, %s, %d, %d, %d, %s, %f", super.getAddress(), super.getSuburb(), super.getBedrooms(), super.getBathrooms(), super.getCarSpaces(), super.getType(), price);

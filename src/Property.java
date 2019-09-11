@@ -7,6 +7,8 @@ public class Property {
 	private int bathrooms;
 	private int carSpaces;
 	private String type;
+	private String propId;
+	private String description;
 
 	public Property(String address, String suburb, int bedrooms, int bathrooms, int carSpaces, String type) {
 		this.address = address;
