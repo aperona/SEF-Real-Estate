@@ -45,7 +45,16 @@ public class Customer extends Account {
 		return;
 
 	}
+	public void setLandLord(boolean landLord) {
+		this.landLord = landLord;
+		return;
 
+	}
+	public void setvendor(boolean vendor) {
+		this.vendor = vendor;
+		return;
+
+	}
 	public String toString() {
 		return super.getUsername() + "," + super.getEmail() + ',' + super.getPassword() + "," + this.type + ","
 				+ this.name + "," + this.surname + "," + this.phNumber;
