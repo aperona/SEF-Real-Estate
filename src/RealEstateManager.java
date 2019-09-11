@@ -30,7 +30,11 @@ public class RealEstateManager {
 
 		while (option != 0) {
 			if (option == 1) {
-				checkLogin();
+				System.out.println("Enter Your Username:");
+				String username = kb.nextLine();
+				System.out.println("Enter Your Password:");
+				String password = kb.nextLine();
+				checkLogin(username, password);
 
 			} else if (option == 2) {
 				System.out.println("create a customer account");
@@ -46,12 +50,8 @@ public class RealEstateManager {
 
 	}
 
-	private void checkLogin() {
-		Scanner kb = new Scanner(System.in);
-		System.out.println("Enter Your Username:");
-		String username = kb.nextLine();
-		System.out.println("Enter Your Password:");
-		String password = kb.nextLine();
+	void checkLogin(String username, String password) {
+
 		int i = 0;
 		while (i < this.accountNum) {
 			if ((this.accountList[i]).getUsername().equals(username)
@@ -101,7 +101,8 @@ public class RealEstateManager {
 		}
 
 	}
-	}
+
+	
 
 	private void openMenu() {
 		Scanner kb = new Scanner(System.in);
