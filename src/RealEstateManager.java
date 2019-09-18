@@ -18,27 +18,71 @@ public class RealEstateManager {
 		this.accountNum = 0;
 		this.propertyNum = 0;
 		this.accessAccount = 0;
+		loadAccountData("accountData.csv");
 		startLogin();
 		saveAccountData("accountData.csv");
 		return;
 	}
 
+	private void loadAccountData(String file) {
+		try {
+			BufferedReader load = new BufferedReader(new FileReader(file));
+			String input = "";
+			input = load.readLine();
+			while (input != null) {
+				String[] fields = input.split(",");
+
+				// reads the data to find which person the data belongs to field[2] contains the
+				// name of the subclass
+				if (fields[2].equals("Customer")) {
+					addCustomer(fields[0], fields[1], fields[2], fields[4], fields[5], fields[6], fields[7], fields[8]);
+					((Customer) this.accountList[this.accountNum - 1]).setType(fields[3]);
+
+
+				}
+				// can be implemented later
+//				if (fields[2].equals("Employee")) {
+//					addEmployee(fields[0], fields[1], fields[2], fields[4], fields[5], fields[6], fields[7]);
+//
+//					((Employee) this.personList[this.personNum - 1]).setType(fields[3]);
+//
+//
+//				}
+//				if (fields[2].equals("Admin")) {
+//
+//					addAdmin(fields[0], fields[1]);
+//
+//				}
+				input = load.readLine();
+			}
+
+			load.close();
+		}
+		// if there is no person data available the program assumes that it is being ran
+		// for the first time and creates a admin account
+		catch (Exception e) {
+			System.out.println(
+					"Error! " + e.getMessage() + "\n No account data\nCreating Admin Account");
+		//	createAdminPerson();
+		}
+		return;
+	}
+
 	private void saveAccountData(String file) {
 
-			try {
-				BufferedWriter save = new BufferedWriter(new FileWriter(file));
-				int i = 0;
-				while (i < this.accountNum) {
-					save.write(this.accountList[i] + "\n");
-					i++;
-				}
-				save.close();
-			} catch (IOException e) {
-				System.out.println( "Error!" + e.getMessage() + "\nWas unable to save to file");
+		try {
+			BufferedWriter save = new BufferedWriter(new FileWriter(file));
+			int i = 0;
+			while (i < this.accountNum) {
+				save.write(this.accountList[i] + "\n");
+				i++;
 			}
-			return;
+			save.close();
+		} catch (IOException e) {
+			System.out.println("Error!" + e.getMessage() + "\nWas unable to save to file");
 		}
-
+		return;
+	}
 
 	private void startLogin() {
 		Scanner kb = new Scanner(System.in);
@@ -49,6 +93,7 @@ public class RealEstateManager {
 
 		while (option != 0) {
 			if (option == 1) {
+				System.out.println("Login");
 				System.out.println("Enter Your Username:");
 				String username = kb.nextLine();
 				System.out.println("Enter Your Password:");
@@ -121,8 +166,6 @@ public class RealEstateManager {
 
 	}
 
-	
-
 	private void openMenu() {
 		Scanner kb = new Scanner(System.in);
 		String menu = "Main Menu\nPlease Make a Selection:\n1. Account Management\nType 0 to log out";
@@ -184,15 +227,15 @@ public class RealEstateManager {
 		String phNumber = kb.nextLine();
 		System.out.println("Are you a landlord y/n");
 		String option = kb.nextLine();
-		boolean landLord = false;
+		String landLord = "false";
 		if (option.matches("y")) {
-			landLord = true;
+			landLord = "true";
 		}
 		System.out.println("Are you a vendor y/n");
 		option = kb.nextLine();
-		boolean vendor = false;
+		String vendor = "false";
 		if (option.matches("y")) {
-			vendor = true;
+			vendor = "true";
 		}
 		addCustomer(username, email, password, name, surname, phNumber, landLord, vendor);
 		return;
@@ -200,7 +243,7 @@ public class RealEstateManager {
 	}
 
 	private void addCustomer(String username, String email, String password, String name, String surname,
-			String phNumber, boolean landLord, boolean vendor) {
+			String phNumber, String landLord, String vendor) {
 		this.accountList[this.accountNum] = new Customer(username, email, password, name, surname, phNumber, landLord,
 				vendor);
 		this.accountNum += 1;
