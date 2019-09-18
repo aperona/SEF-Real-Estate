@@ -1,4 +1,5 @@
-import java.util.Scanner;
+import java.util.*;
+import java.io.*;
 
 public class RealEstateManager {
 	private int maxAccounts;
@@ -18,8 +19,26 @@ public class RealEstateManager {
 		this.propertyNum = 0;
 		this.accessAccount = 0;
 		startLogin();
+		saveAccountData("accountData.csv");
 		return;
 	}
+
+	private void saveAccountData(String file) {
+
+			try {
+				BufferedWriter save = new BufferedWriter(new FileWriter(file));
+				int i = 0;
+				while (i < this.accountNum) {
+					save.write(this.accountList[i] + "\n");
+					i++;
+				}
+				save.close();
+			} catch (IOException e) {
+				System.out.println( "Error!" + e.getMessage() + "\nWas unable to save to file");
+			}
+			return;
+		}
+
 
 	private void startLogin() {
 		Scanner kb = new Scanner(System.in);
