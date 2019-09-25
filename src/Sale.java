@@ -20,6 +20,7 @@ public class Sale extends Property {
 	public Sale(Property p, double price) {
 		super(p.getAddress(), p.getSuburb(), p.getBedrooms(), p.getBathrooms(), p.getCarSpaces(), p.getType());
 		this.price = price;
+		addToArray(this);
 	}
 	
 	// getter for price double
@@ -76,7 +77,8 @@ public class Sale extends Property {
 	// Private method to add sale objects to array to avoid duplicated code
 	private void addToArray(Sale sale) {
 		for(Sale s : forSaleProperties) {
-			if(s.equals(null)) {
+			if(s == null) {
+				super.addToArray(sale);
 				s = sale;
 				return;
 			}
@@ -88,6 +90,12 @@ public class Sale extends Property {
 	public String toString() {
 		String details = "";
 		details += System.out.printf("%s, %s, %d, %d, %d, %s, %f", super.getAddress(), super.getSuburb(), super.getBedrooms(), super.getBathrooms(), super.getCarSpaces(), super.getType(), price);
+		return details;
+	}
+	
+	public String getDetails() {
+		String details = super.getDetails();
+		details += String.format("%s\n", "Listed Price: " + price);
 		return details;
 	}
 }

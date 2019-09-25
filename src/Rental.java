@@ -11,12 +11,14 @@ public class Rental extends Property {
 	public Rental(String address, String suburb, int bedrooms, int bathrooms, int carSpaces, String type, double rent) {
 		super(address, suburb, bedrooms, bathrooms, carSpaces, type);
 		this.weeklyRental = rent;
+		addToArray(this);
 	}
 	
 	// Alternative constructor for when a Property already exists and is becoming a property for rent
 	public Rental(Property p, double rent) {
 		super(p.getAddress(), p.getSuburb(), p.getBedrooms(), p.getBathrooms(), p.getCarSpaces(), p.getType());
 		this.weeklyRental = rent;
+		addToArray(this);
 	}
 	
 	// Getter for the rent double
@@ -59,12 +61,19 @@ public class Rental extends Property {
 	// Private method to add sale objects to array to avoid duplicated code
 	private void addToArray(Rental rental) {
 		for(Rental r : rentalProperties) {
-			if(r.equals(null)) {
+			if(r == null) {
+				super.addToArray(rental);
 				r = rental;
 				return;
 			}
 		}
 		System.out.println("Did not add to array");
+	}
+	
+	public String getDetails() {
+		String details = super.getDetails();
+		details += String.format("%s\n", "Rent Cost: " + weeklyRental);
+		return details;
 	}
 	
 }
