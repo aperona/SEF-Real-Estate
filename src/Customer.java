@@ -5,12 +5,12 @@ public class Customer extends Account {
 	private String surname;
 	private String phNumber;
 	private String type;
-	private boolean landLord;
-	private boolean vendor;
+	private String landLord;
+	private String vendor;
 
 	// Customer constructor
 	public Customer(String username, String email, String password, String name, String surname, String phNumber,
-			boolean landLord, boolean vendor) {
+			String landLord, String vendor) {
 		super(username, email, password);
 		this.type = "Customer";
 		this.name = name;
@@ -32,11 +32,11 @@ public class Customer extends Account {
 	public String getPhNumber() {
 		return this.phNumber;
 	}
-	public boolean getLandLord() {
+	public String getLandLord() {
 		return this.landLord;
 	}
 
-	public boolean getVendor() {
+	public String getVendor() {
 		return this.vendor;
 	}
 
@@ -45,12 +45,12 @@ public class Customer extends Account {
 		return;
 
 	}
-	public void setLandLord(boolean landLord) {
+	public void setLandLord(String landLord) {
 		this.landLord = landLord;
 		return;
 
 	}
-	public void setvendor(boolean vendor) {
+	public void setvendor(String vendor) {
 		this.vendor = vendor;
 		return;
 
