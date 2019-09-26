@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 
 public class Property {
 
@@ -8,9 +10,14 @@ public class Property {
 	private int carSpaces;
 	private String type;
 	private String propId;
-	private int id;
+	private static int id;
 	private String description;
-	private Property[] properties = new Property[100];
+//	private Property[] properties;
+	private static ArrayList<Property> properties = new ArrayList<Property>();
+
+	public ArrayList<Property> getProperties() {
+		return properties;
+	}
 
 	public Property(String address, String suburb, int bedrooms, int bathrooms, int carSpaces, String type) {
 		this.address = address;
@@ -20,28 +27,65 @@ public class Property {
 		this.carSpaces = carSpaces;
 		this.type = type;
 		setPropId();
-		addToArray(this);
+		properties.add(this);
 	}
 	
 	private void setPropId() {
-		if(propId == null) {
-			propId = "00";
-			id = 1;
-			return;
-		}
 		if(id < 10) {
 			propId = "0" + Integer.toString(id);
 		} else
 			propId = Integer.toString(id);
 		id++;
 	}
-
+	
+	public void printProperties() {
+		String details = "";
+		for(Property p : properties) {
+			System.out.println(p.getDetails());
+		}
+	}
+	
+	public void removeFromArray(Property p) {
+		properties.remove(properties.indexOf(p));
+	}
+	
+	public void addToArray(Property p) {
+		properties.add(p);
+	}
+	
+	// Takes a property and turns it into a Rental Property
+	public void changePropertyTypeToRental(Property prop, double rent) {
+		for(Property p : properties) {
+			if(p.getPropId().equals(prop.getPropId())) {
+				p = null;
+			}
+		}
+		Rental r = new Rental(prop, rent);
+	}
+	
+	// Takes a property and turns it into a Sale Property
+	public void changePropertyTypeToSale(Property prop, double price) {
+		for(Property p : properties) {
+			if(p.getPropId().equals(prop.getPropId())) {
+				p = null;
+			}
+		}
+		Sale s = new Sale(prop, price);
+	}
+	
 	public String toString() {
 		String details = "";
 		details += System.out.printf("%s, %s, %d, %d, %d, %s", address, suburb, bedrooms, bathrooms, carSpaces, type);
 		return details;
 	}
-
+	
+	public String getDetails() {
+		String details = "";
+		details += String.format("%s\n%s\n%s\n%s\n%s\n%s\n%s\n", "Property: " + propId, "Address: " + address, "Suburb: " + suburb, "no. of bedrooms: " + bedrooms,
+				"no. of Bathrooms: " + bathrooms, "no. of Car Spaces: " + carSpaces, "Type: " + type);
+		return details;
+	}
+	
 	public String getAddress() {
 		return address;
 	}
@@ -70,36 +114,8 @@ public class Property {
 		this.type = type;
 	}
 	
-	public String getDetails() {
-		String details = "";
-		details += String.format("%s\n%s\n%s\n%s\n%s\n%s\n%s\n", "Property: " + propId, "Address: " + address, "Suburb: " + suburb, "no. of bedrooms: " + bedrooms,
-				"no. of Bathrooms: " + bathrooms, "no. of Car Spaces: " + carSpaces, "Type: " + type);
-		return details;
+	public String getPropId() {
+		return propId;
 	}
-	
-	public String printProperties() {
-		String details = "";
-		for(int i = 0; i < properties.length; i++) {
-			if(properties[i] == null) {
-				details += properties[i].getDetails();
-				return details;
-			}
-		}
-		return details;
-	}
-	
-	protected void addToArray(Property prop) {
-		for(Property p : properties) {
-			if(p == null) {
-				p = prop;
-				System.out.println("YO");
-				System.out.println(p.getDetails());
-				return;
-			}
-			System.out.println("YOO");
-		}
-		System.out.println("Did not add to array");
-	}
-	
 
 }
