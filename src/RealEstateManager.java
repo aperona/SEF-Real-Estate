@@ -228,7 +228,7 @@ public class RealEstateManager {
 
 	private void lookRent() {
 		Scanner kb = new Scanner(System.in);
-		String menu = "Rental Lookup\nPlease Make a Selection:\n1.List All Rentals nType 0 to return to Property Lookup.";
+		String menu = "Rental Lookup\nPlease Make a Selection:\n1.List All Rentals \nType 0 to return to Property Lookup.";
 		System.out.println(menu);
 		int option = kb.nextInt();
 		// as long as a user doesn't cancel it the menu will appear
