@@ -93,12 +93,9 @@ public class RealEstateManager {
 
 		while (option != 0) {
 			if (option == 1) {
-				System.out.println("Login");
-				System.out.println("Enter Your Username:");
-				String username = kb.nextLine();
-				System.out.println("Enter Your Password:");
-				String password = kb.nextLine();
-				checkLogin(username, password);
+				
+			
+				checkLogin();
 
 			} else if (option == 2) {
 				System.out.println("create a customer account");
@@ -114,8 +111,12 @@ public class RealEstateManager {
 
 	}
 
-	void checkLogin(String username, String password) {
-
+	void checkLogin() {
+		Scanner kb = new Scanner(System.in);
+		System.out.println("Enter Your Username:");
+		String username = kb.nextLine();
+		System.out.println("Enter Your Password:");
+		String password = kb.nextLine();
 		int i = 0;
 		while (i < this.accountNum) {
 			if ((this.accountList[i]).getUsername().equals(username)
@@ -168,16 +169,79 @@ public class RealEstateManager {
 
 	private void openMenu() {
 		Scanner kb = new Scanner(System.in);
-		String menu = "Main Menu\nPlease Make a Selection:\n1. Account Management\nType 0 to log out";
+		String menu = "Main Menu\nPlease Make a Selection:\n1. Browse Properties \n2. List Properties \n3. ???\n4. Account Management\nType 0 to log out";
 		System.out.println(menu);
 		int option = kb.nextInt();
 		// as long as a user doesn't cancel it the menu will appear
 
 		while (option != 0) {
 			if (option == 1) {
-				accountManager();
+				browseProperies();
 
 			} else if (option == 2) {
+				listProperties();
+			}else if (option == 3) {
+				
+			}else if (option == 4) {
+				accountManager();
+			} else {
+				System.out.println("Invalid Entry");// if the user enters anything other than 1-4
+
+			}
+			System.out.println(menu);
+			option = kb.nextInt();
+		}
+
+	}
+
+	private void listProperties() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void browseProperies() {
+		Scanner kb = new Scanner(System.in);
+		String menu = "Browse Properties\nPlease Make a Selection:\n1.Looking to Rent \n2.Looking to Buy \nType 0 to return to main menu.";
+		System.out.println(menu);
+		int option = kb.nextInt();
+		// as long as a user doesn't cancel it the menu will appear
+
+		while (option != 0) {
+			if (option == 1) {
+				lookRent();
+
+			} else if (option == 2) {
+				
+			}else if (option == 3) {
+				
+			}else if (option == 4) {
+				
+			} else {
+				System.out.println("Invalid Entry");// if the user enters anything other than 1-4
+
+			}
+			System.out.println(menu);
+			option = kb.nextInt();
+		}
+
+	}
+
+	private void lookRent() {
+		Scanner kb = new Scanner(System.in);
+		String menu = "Rental Lookup\nPlease Make a Selection:\n1.List All Rentals nType 0 to return to Property Lookup.";
+		System.out.println(menu);
+		int option = kb.nextInt();
+		// as long as a user doesn't cancel it the menu will appear
+
+		while (option != 0) {
+			if (option == 1) {
+				listRentals();
+
+			} else if (option == 2) {
+				
+			}else if (option == 3) {
+				
+			}else if (option == 4) {
 				
 			} else {
 				System.out.println("Invalid Entry");// if the user enters anything other than 1-4
