@@ -178,7 +178,7 @@ public class RealEstateManager {
 				accountManager();
 
 			} else if (option == 2) {
-
+				
 			} else {
 				System.out.println("Invalid Entry");// if the user enters anything other than 1-4
 
@@ -251,7 +251,21 @@ public class RealEstateManager {
 		return;
 
 	}
+	private void listRentals() {
+		int x = 0;
+		while(x<this.propertyNum)
+		{
+			if (this.propertyList[x] instanceof Rental) {
+				System.out.println(this.propertyList[x].toString());
+				x++;
+			}
+		}
 
+
+		return;
+
+	}
+	
 	public static void main(String[] args) {
 
 		RealEstateManager mr = new RealEstateManager(100, 100);
