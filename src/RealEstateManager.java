@@ -5,16 +5,17 @@ public class RealEstateManager {
 	private int maxAccounts;
 	private int maxProperties;
 	private Account[] accountList;
-	private Property[] propertyList;
+	private List<Property> propertyList = new ArrayList<>();
 	private int accountNum;
 	private int propertyNum;
+	private int id;
 	int accessAccount;// position of the current logged in account on array
 
 	public RealEstateManager(int maxAccounts, int maxProperties) {
 		this.maxAccounts = maxAccounts;
 		this.maxProperties = maxProperties;
 		this.accountList = new Account[this.maxAccounts];
-		this.propertyList = new Property[this.maxProperties];
+//		this.propertyList = new Property[this.maxProperties];
 		this.accountNum = 0;
 		this.propertyNum = 0;
 		this.accessAccount = 0;
@@ -38,21 +39,21 @@ public class RealEstateManager {
 					addCustomer(fields[0], fields[1], fields[2], fields[4], fields[5], fields[6], fields[7], fields[8]);
 					((Customer) this.accountList[this.accountNum - 1]).setType(fields[3]);
 
-
 				}
 				// can be implemented later
-//				if (fields[2].equals("Employee")) {
-//					addEmployee(fields[0], fields[1], fields[2], fields[4], fields[5], fields[6], fields[7]);
-//
-//					((Employee) this.personList[this.personNum - 1]).setType(fields[3]);
-//
-//
-//				}
-//				if (fields[2].equals("Admin")) {
-//
-//					addAdmin(fields[0], fields[1]);
-//
-//				}
+				// if (fields[2].equals("Employee")) {
+				// addEmployee(fields[0], fields[1], fields[2], fields[4], fields[5], fields[6],
+				// fields[7]);
+				//
+				// ((Employee) this.personList[this.personNum - 1]).setType(fields[3]);
+				//
+				//
+				// }
+				// if (fields[2].equals("Admin")) {
+				//
+				// addAdmin(fields[0], fields[1]);
+				//
+				// }
 				input = load.readLine();
 			}
 
@@ -61,9 +62,8 @@ public class RealEstateManager {
 		// if there is no person data available the program assumes that it is being ran
 		// for the first time and creates a admin account
 		catch (Exception e) {
-			System.out.println(
-					"Error! " + e.getMessage() + "\n No account data\nCreating Admin Account");
-		//	createAdminPerson();
+			System.out.println("Error! " + e.getMessage() + "\n No account data\nCreating Admin Account");
+			// createAdminPerson();
 		}
 		return;
 	}
@@ -93,8 +93,7 @@ public class RealEstateManager {
 
 		while (option != 0) {
 			if (option == 1) {
-				
-			
+
 				checkLogin();
 
 			} else if (option == 2) {
@@ -176,14 +175,15 @@ public class RealEstateManager {
 
 		while (option != 0) {
 			if (option == 1) {
-				browseProperies();
-
+				browseProperties();
 			} else if (option == 2) {
-				listProperties();
-			}else if (option == 3) {
-				
-			}else if (option == 4) {
+				System.out.println(listProperties());
+			} else if (option == 3) {
+
+			} else if (option == 4) {
 				accountManager();
+			} else if (option == 5) {
+				makeProperty();
 			} else {
 				System.out.println("Invalid Entry");// if the user enters anything other than 1-4
 
@@ -194,12 +194,16 @@ public class RealEstateManager {
 
 	}
 
-	private void listProperties() {
-		// TODO Auto-generated method stub
-		
+	private String listProperties() {
+		String details = "";
+		for (Property p : propertyList) {
+			details += p.getDetails();
+			details += "\n";
+		}
+		return details;
 	}
 
-	private void browseProperies() {
+	private void browseProperties() {
 		Scanner kb = new Scanner(System.in);
 		String menu = "Browse Properties\nPlease Make a Selection:\n1.Looking to Rent \n2.Looking to Buy \nType 0 to return to main menu.";
 		System.out.println(menu);
@@ -211,11 +215,11 @@ public class RealEstateManager {
 				lookRent();
 
 			} else if (option == 2) {
-				
-			}else if (option == 3) {
-				
-			}else if (option == 4) {
-				
+
+			} else if (option == 3) {
+
+			} else if (option == 4) {
+
 			} else {
 				System.out.println("Invalid Entry");// if the user enters anything other than 1-4
 
@@ -223,7 +227,6 @@ public class RealEstateManager {
 			System.out.println(menu);
 			option = kb.nextInt();
 		}
-
 	}
 
 	private void lookRent() {
@@ -238,11 +241,11 @@ public class RealEstateManager {
 				listRentals();
 
 			} else if (option == 2) {
-				
-			}else if (option == 3) {
-				
-			}else if (option == 4) {
-				
+
+			} else if (option == 3) {
+
+			} else if (option == 4) {
+
 			} else {
 				System.out.println("Invalid Entry");// if the user enters anything other than 1-4
 
@@ -250,7 +253,6 @@ public class RealEstateManager {
 			System.out.println(menu);
 			option = kb.nextInt();
 		}
-
 	}
 
 	private void accountManager() {
@@ -272,7 +274,6 @@ public class RealEstateManager {
 			System.out.println(menu);
 			option = kb.nextInt();
 		}
-
 	}
 
 	private void createCustomer() {
@@ -315,21 +316,103 @@ public class RealEstateManager {
 		return;
 
 	}
-	private void listRentals() {
-		int x = 0;
-		while(x<this.propertyNum)
-		{
-			if (this.propertyList[x] instanceof Rental) {
-				System.out.println(this.propertyList[x].toString());
-				x++;
+	
+	private void makeProperty() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("What type of property is this - house, unit, flat, townhouse or studio");
+		String type = sc.nextLine();
+		System.out.println("What is the address of your " + type);
+		String address = sc.nextLine();
+		System.out.println("What is the suburb of your " + type);
+		String suburb = sc.nextLine();
+		System.out.println("How many bedrooms does your " + type + " have?");
+		int bedrooms = sc.nextInt();
+		System.out.println("How many bathrooms does your " + type + " have?");
+		int bathrooms = sc.nextInt();
+		System.out.println("How many car spaces does your " + type + " have?");
+		int carSpaces = sc.nextInt();
+		addProperty(address, suburb, bedrooms, bathrooms, carSpaces, type);
+//		int choice = 0;
+//		while(choice != 1 || choice != 2) {
+//			System.out.println("Confirm the adding of your property: \nType 1 for yes:\nType 2 for no:");
+//			choice = sc.nextInt();
+//			if(choice == 1) {
+//				addProperty(address, suburb, bedrooms, bathrooms, carSpaces, type);
+//				return;
+//			}else if(choice == 2){
+//				return;
+//			}else {
+//				System.out.println("Re-enter your choice");
+//			}
+//		}
+		
+	}
+
+	private void addProperty(String address, String suburb, int bedrooms, int bathrooms, int carSpaces, String type) {
+		String propId = setPropId();
+		Property p = new Property(propId, address, suburb, bedrooms, bathrooms, carSpaces, type);
+		propertyList.add(p);
+	}
+
+	private void addRental(String address, String suburb, int bedrooms, int bathrooms, int carSpaces, String type,
+			double rent) {
+		String propId;
+		propId = setPropId();
+		for (Property p : propertyList) {
+			if (p == null) {
+				p = new Rental(propId, address, suburb, bedrooms, bathrooms, carSpaces, type, rent);
+				propertyList.add(p);
+				return;
 			}
 		}
-
-
-		return;
-
 	}
-	
+
+	private void addSale(String address, String suburb, int bedrooms, int bathrooms, int carSpaces, String type,
+			double price) {
+		String propId;
+		propId = setPropId();
+		for (Property p : propertyList) {
+			if (p == null) {
+				p = new Sale(propId, address, suburb, bedrooms, bathrooms, carSpaces, type, price);
+				propertyList.add(p);
+				return;
+			}
+		}
+	}
+
+	private String setPropId() {
+		String propId;
+		if (id < 10) {
+			propId = "0" + Integer.toString(id);
+			id++;
+			return propId;
+		} else {
+			propId = Integer.toString(id);
+			id++;
+			return propId;
+		}
+	}
+
+	private void listRentals() {
+		String details = "";
+		for(Property p : propertyList) {
+			if(p instanceof Rental) {
+				details += p.getDetails();
+			}
+		}
+		System.out.println(details);
+	}
+
+	private void listSales() {
+		String details = "";
+		for(Property p : propertyList) {
+			if(p instanceof Sale) {
+				details += p.getDetails();
+			}
+		}
+		System.out.println(details);
+	}
+
 	public static void main(String[] args) {
 
 		RealEstateManager mr = new RealEstateManager(100, 100);

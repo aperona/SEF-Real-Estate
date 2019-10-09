@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
 
 public class Property {
 
@@ -12,14 +10,9 @@ public class Property {
 	private String propId;
 	private static int id;
 	private String description;
-//	private Property[] properties;
-	private static ArrayList<Property> properties = new ArrayList<Property>();
 
-	public ArrayList<Property> getProperties() {
-		return properties;
-	}
-
-	public Property(String address, String suburb, int bedrooms, int bathrooms, int carSpaces, String type) {
+	public Property(String propId, String address, String suburb, int bedrooms, int bathrooms, int carSpaces, String type) {
+		this.propId = propId;
 		this.address = address;
 		this.suburb = suburb;
 		this.bedrooms = bedrooms;
@@ -27,50 +20,6 @@ public class Property {
 		this.carSpaces = carSpaces;
 		this.type = type;
 		setPropId();
-		properties.add(this);
-	}
-	
-	private void setPropId() {
-		if(id < 10) {
-			propId = "0" + Integer.toString(id);
-		} else
-			propId = Integer.toString(id);
-		id++;
-	}
-	
-	public void printProperties() {
-		String details = "";
-		for(Property p : properties) {
-			System.out.println(p.getDetails());
-		}
-	}
-	
-	public void removeFromArray(Property p) {
-		properties.remove(properties.indexOf(p));
-	}
-	
-	public void addToArray(Property p) {
-		properties.add(p);
-	}
-	
-	// Takes a property and turns it into a Rental Property
-	public void changePropertyTypeToRental(Property prop, double rent) {
-		for(Property p : properties) {
-			if(p.getPropId().equals(prop.getPropId())) {
-				p = null;
-			}
-		}
-		Rental r = new Rental(prop, rent);
-	}
-	
-	// Takes a property and turns it into a Sale Property
-	public void changePropertyTypeToSale(Property prop, double price) {
-		for(Property p : properties) {
-			if(p.getPropId().equals(prop.getPropId())) {
-				p = null;
-			}
-		}
-		Sale s = new Sale(prop, price);
 	}
 	
 	public String toString() {
@@ -117,5 +66,51 @@ public class Property {
 	public String getPropId() {
 		return propId;
 	}
+	
+
+	private void setPropId() {
+		if(id < 10) {
+			propId = "0" + Integer.toString(id);
+		} else
+			propId = Integer.toString(id);
+		id++;
+	}
+	/*
+	 * Code removed - Added to RealEstateManager.
+	public void printProperties() {
+		String details = "";
+		for(Property p : properties) {
+			System.out.println(p.getDetails());
+		}
+	}
+	
+	public void removeFromArray(Property p) {
+		properties.remove(properties.indexOf(p));
+	}
+	
+	public void addToArray(Property p) {
+		properties.add(p);
+	}
+	
+	// Takes a property and turns it into a Rental Property
+	public void changePropertyTypeToRental(Property prop, double rent) {
+		for(Property p : properties) {
+			if(p.getPropId().equals(prop.getPropId())) {
+				p = null;
+			}
+		}
+		Rental r = new Rental(prop, rent);
+	}
+	
+	// Takes a property and turns it into a Sale Property
+	public void changePropertyTypeToSale(Property prop, double price) {
+		for(Property p : properties) {
+			if(p.getPropId().equals(prop.getPropId())) {
+				p = null;
+			}
+		}
+		Sale s = new Sale(prop, price);
+	}
+	*/
 
 }
