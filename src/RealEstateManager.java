@@ -15,7 +15,6 @@ public class RealEstateManager {
 		this.maxAccounts = maxAccounts;
 		this.maxProperties = maxProperties;
 		this.accountList = new Account[this.maxAccounts];
-//		this.propertyList = new Property[this.maxProperties];
 		this.accountNum = 0;
 		this.propertyNum = 0;
 		this.accessAccount = 0;
@@ -86,6 +85,28 @@ public class RealEstateManager {
 
 	private void startLogin() {
 		Scanner kb = new Scanner(System.in);
+////		TODO: Remove this
+//		addCustomer("a", "a", "a", "a", "a", "a", "a", "a");
+//		addSale("1 a lane", "Melbourne", 0, 0, 0, "House", 600000);
+//		addSale("1 a lane", "Melbourne", 0, 0, 0, "House", 750000);
+//		addSale("1 a lane", "Melbourne", 0, 0, 0, "House", 900000);
+//		addSale("1 a lane", "Melbourne", 0, 0, 0, "House", 100000);
+//		addSale("1 a lane", "Melbourne", 0, 0, 0, "House", 200000);
+//		addSale("1 a lane", "Melbourne", 0, 0, 0, "House", 400000);
+//		addRental("2 a Road", "Richmond", 1, 1, 1, "Unit", 600);
+//		addRental("2 a Road", "Richmond", 1, 1, 1, "Unit", 500);
+//		addRental("2 a Road", "Richmond", 1, 1, 1, "Unit", 400);
+//		addRental("2 a Road", "Richmond", 1, 1, 1, "Unit", 300);
+//		addRental("2 a Road", "Richmond", 1, 1, 1, "Unit", 200);
+//		addRental("2 a Road", "Richmond", 1, 1, 1, "Unit", 100);
+//		addRental("2 a Road", "Richmond", 1, 1, 1, "Unit", 700);
+//		addRental("2 a Road", "Richmond", 1, 1, 1, "Unit", 800);
+//		addRental("2 a Road", "Richmond", 1, 1, 1, "Unit", 150);
+//		addRental("2 a Road", "Richmond", 1, 1, 1, "Unit", 250);
+//		addRental("2 a Road", "Richmond", 1, 1, 1, "Unit", 350);
+//		addRental("2 a Road", "Richmond", 1, 1, 1, "Unit", 450);
+//		addRental("2 a Road", "Richmond", 1, 1, 1, "Unit", 600);
+//		addRental("2 a Road", "Richmond", 1, 1, 1, "Unit", 600);
 		String menu = "Login\nPlease Make a Selection:\n1. Login\n2. Create Account\nTo locate account details \nplease talk to one of our staff";
 		System.out.println(menu);
 		int option = kb.nextInt();
@@ -168,7 +189,7 @@ public class RealEstateManager {
 
 	private void openMenu() {
 		Scanner kb = new Scanner(System.in);
-		String menu = "Main Menu\nPlease Make a Selection:\n1. Browse Properties \n2. List Properties \n3. ???\n4. Account Management\nType 0 to log out";
+		String menu = "Main Menu\nPlease Make a Selection:\n1. Browse Properties \n2. List Properties \n3. ???\n4. Account Management \n5. Register Property \nType 0 to log out";
 		System.out.println(menu);
 		int option = kb.nextInt();
 		// as long as a user doesn't cancel it the menu will appear
@@ -192,67 +213,6 @@ public class RealEstateManager {
 			option = kb.nextInt();
 		}
 
-	}
-
-	private String listProperties() {
-		String details = "";
-		for (Property p : propertyList) {
-			details += p.getDetails();
-			details += "\n";
-		}
-		return details;
-	}
-
-	private void browseProperties() {
-		Scanner kb = new Scanner(System.in);
-		String menu = "Browse Properties\nPlease Make a Selection:\n1.Looking to Rent \n2.Looking to Buy \nType 0 to return to main menu.";
-		System.out.println(menu);
-		int option = kb.nextInt();
-		// as long as a user doesn't cancel it the menu will appear
-
-		while (option != 0) {
-			if (option == 1) {
-				lookRent();
-
-			} else if (option == 2) {
-
-			} else if (option == 3) {
-
-			} else if (option == 4) {
-
-			} else {
-				System.out.println("Invalid Entry");// if the user enters anything other than 1-4
-
-			}
-			System.out.println(menu);
-			option = kb.nextInt();
-		}
-	}
-
-	private void lookRent() {
-		Scanner kb = new Scanner(System.in);
-		String menu = "Rental Lookup\nPlease Make a Selection:\n1.List All Rentals \nType 0 to return to Property Lookup.";
-		System.out.println(menu);
-		int option = kb.nextInt();
-		// as long as a user doesn't cancel it the menu will appear
-
-		while (option != 0) {
-			if (option == 1) {
-				listRentals();
-
-			} else if (option == 2) {
-
-			} else if (option == 3) {
-
-			} else if (option == 4) {
-
-			} else {
-				System.out.println("Invalid Entry");// if the user enters anything other than 1-4
-
-			}
-			System.out.println(menu);
-			option = kb.nextInt();
-		}
 	}
 
 	private void accountManager() {
@@ -319,6 +279,8 @@ public class RealEstateManager {
 	
 	private void makeProperty() {
 		Scanner sc = new Scanner(System.in);
+		String propType;
+		double price;
 		System.out.println("What type of property is this - house, unit, flat, townhouse or studio");
 		String type = sc.nextLine();
 		System.out.println("What is the address of your " + type);
@@ -331,20 +293,35 @@ public class RealEstateManager {
 		int bathrooms = sc.nextInt();
 		System.out.println("How many car spaces does your " + type + " have?");
 		int carSpaces = sc.nextInt();
-		addProperty(address, suburb, bedrooms, bathrooms, carSpaces, type);
-//		int choice = 0;
-//		while(choice != 1 || choice != 2) {
-//			System.out.println("Confirm the adding of your property: \nType 1 for yes:\nType 2 for no:");
-//			choice = sc.nextInt();
-//			if(choice == 1) {
-//				addProperty(address, suburb, bedrooms, bathrooms, carSpaces, type);
-//				return;
-//			}else if(choice == 2){
-//				return;
-//			}else {
-//				System.out.println("Re-enter your choice");
-//			}
-//		}
+		System.out.println("Would you like to make a property to sell, or to lease?\n1. Sell: \n2. Lease:");
+		if(sc.nextInt() == 1) {
+			propType = "Sale";
+			System.out.println("You selected a Sale property\nWhat is the minimum you would like to list this property for?");
+			price = sc.nextDouble();
+		}else {
+			propType = "Rental";
+			System.out.println("You selected a Rental property\nHow much would you like to charge for rent per week?");
+			price = sc.nextDouble();
+		}
+		int choice = 0;
+		while(choice != 1 || choice != 2) {
+			System.out.println("Confirm the adding of your property: \nType 1 for yes:\nType 2 for no:");
+			choice = sc.nextInt();
+			if(choice == 1) {
+				if(propType.equalsIgnoreCase("sale")) {
+					addSale(address, suburb, bedrooms, bathrooms, carSpaces, type, price);
+				}
+				if(propType.equalsIgnoreCase("rental")) {
+					addRental(address, suburb, bedrooms, bathrooms, carSpaces, type, price);
+				}
+				return;
+			}else if(choice == 2){
+				System.out.println("*********************************************\nProperty Not Created - Returning to Main Menu\n*********************************************");
+				return;
+			}else {
+				System.out.println("Re-enter your choice");
+			}
+		}
 		
 	}
 
@@ -352,47 +329,139 @@ public class RealEstateManager {
 		String propId = setPropId();
 		Property p = new Property(propId, address, suburb, bedrooms, bathrooms, carSpaces, type);
 		propertyList.add(p);
+		System.out.println("Property Created");
 	}
 
 	private void addRental(String address, String suburb, int bedrooms, int bathrooms, int carSpaces, String type,
 			double rent) {
 		String propId;
 		propId = setPropId();
-		for (Property p : propertyList) {
-			if (p == null) {
-				p = new Rental(propId, address, suburb, bedrooms, bathrooms, carSpaces, type, rent);
-				propertyList.add(p);
-				return;
-			}
-		}
+		Property p = new Rental(propId, address, suburb, bedrooms, bathrooms, carSpaces, type, rent);
+		propertyList.add(p);
+		System.out.println("Rental Property Created");
 	}
 
 	private void addSale(String address, String suburb, int bedrooms, int bathrooms, int carSpaces, String type,
 			double price) {
 		String propId;
 		propId = setPropId();
-		for (Property p : propertyList) {
-			if (p == null) {
-				p = new Sale(propId, address, suburb, bedrooms, bathrooms, carSpaces, type, price);
-				propertyList.add(p);
-				return;
-			}
-		}
+		Property p = new Sale(propId, address, suburb, bedrooms, bathrooms, carSpaces, type, price);
+		propertyList.add(p);
+		System.out.println("Sale Property Created");
 	}
 
 	private String setPropId() {
 		String propId;
-		if (id < 10) {
-			propId = "0" + Integer.toString(id);
-			id++;
-			return propId;
-		} else {
-			propId = Integer.toString(id);
-			id++;
-			return propId;
+		propId = String.format("%1$01d", id);
+		id++;
+		return propId;
+	}
+
+	private String listProperties() {
+		String details = "";
+		for (Property p : propertyList) {
+			details += p.getDetails();
+			details += "\n";
+		}
+		return details;
+	}
+
+	private void browseProperties() {
+		Scanner kb = new Scanner(System.in);
+		String menu = "Browse Properties\nPlease Make a Selection:\n1.Looking to Rent \n2.Looking to Buy \nType 0 to return to main menu.";
+		System.out.println(menu);
+		int option = kb.nextInt();
+		// as long as a user doesn't cancel it the menu will appear
+
+		while (option != 0) {
+			if (option == 1) {
+				lookRent();
+
+			} else if (option == 2) {
+				lookSale();
+
+			} else if (option == 3) {
+
+			} else if (option == 4) {
+
+			} else {
+				System.out.println("Invalid Entry");// if the user enters anything other than 1-4
+
+			}
+			System.out.println(menu);
+			option = kb.nextInt();
 		}
 	}
 
+	private void lookRent() {
+		Scanner kb = new Scanner(System.in);
+		String menu = "Rental Lookup\nPlease Make a Selection:\n1.List All Rentals \n2. Search Rentals by suburb \n3. Search Rentals by weekly rent \nType 0 to return to Property Lookup.";
+		System.out.println(menu);
+		int option = kb.nextInt();
+		// as long as a user doesn't cancel it the menu will appear
+
+		while (option != 0) {
+			if (option == 1) {
+				listRentals();
+
+			} else if (option == 2) {
+				System.out.println("Which suburb would you like to search for?");
+				String suburb = kb.next();
+				listRentals(suburb);
+
+			} else if (option == 3) {
+				System.out.println("Would you like to search by minimum or maximum? \n1. Minimum \n2. Maximum \n");
+				int search = kb.nextInt();
+				System.out.println("Enter the rent");
+				double amount = kb.nextDouble();
+				listRentals(amount, search);
+				
+			} else if (option == 4) {
+
+			} else {
+				System.out.println("Invalid Entry");// if the user enters anything other than 1-4
+
+			}
+			System.out.println(menu);
+			option = kb.nextInt();
+		}
+	}
+	
+	private void lookSale() {
+		Scanner kb = new Scanner(System.in);
+		String menu = "For Sale Lookup\nPlease Make a Selection:\n1.List All For Sale Properties \n2. Search Sales by suburb \n3. Search Sales by price\nType 0 to return to Property Lookup.";
+		System.out.println(menu);
+		int option = kb.nextInt();
+		// as long as a user doesn't cancel it the menu will appear
+
+		while (option != 0) {
+			if (option == 1) {
+				listSales();
+
+			} else if (option == 2) {
+				System.out.println("Which suburb would you like to search for?");
+				String suburb = kb.next();
+				listSales(suburb);
+
+			} else if (option == 3) {
+				System.out.println("Would you like to search by minimum or maximum? \n1. Minimum \n2. Maximum \n");
+				int search = kb.nextInt();
+				System.out.println("Enter the price");
+				double amount = kb.nextDouble();
+				listSales(amount, search);
+
+			} else if (option == 4) {
+
+			} else {
+				System.out.println("Invalid Entry");// if the user enters anything other than 1-4
+
+			}
+			System.out.println(menu);
+			option = kb.nextInt();
+		}
+	}
+	
+	// Default for listing all rentals
 	private void listRentals() {
 		String details = "";
 		for(Property p : propertyList) {
@@ -401,8 +470,85 @@ public class RealEstateManager {
 			}
 		}
 		System.out.println(details);
+		chooseRental();
 	}
 
+	// Shows all rentals in the suburb specified
+	private void listRentals(String suburb) {
+		String details = "";
+		for(Property p : propertyList) {
+			if(p instanceof Rental) {
+				if(p.getSuburb().equalsIgnoreCase(suburb)) {
+					details += p.getDetails();
+				}
+			}
+		}
+		detailsCheck(details);
+		System.out.println(details);
+		chooseRental();
+	}
+	
+	// Shows all rentals in the price range specified
+	private void listRentals(double amount, int search) {
+		String details = "";
+		if(search == 1) {
+			System.out.println("\nProperties with a minimum price of: " + amount + "\n");
+			for(Property p : propertyList) {
+				if(p instanceof Rental) {
+					if(((Rental) p).getRent() >= amount) {
+						details += p.getDetails();
+					}
+				}
+			}
+		}else if(search == 2) {
+			System.out.println("\nProperties with a maximum price of: " + amount + "\n");
+			for(Property p : propertyList) {
+				if(p instanceof Rental) {
+					if(((Rental) p).getRent() <= amount) {
+						details += p.getDetails();
+					}
+				}
+			}
+		}
+		detailsCheck(details);
+		System.out.println(details);
+		chooseRental();
+	}
+	
+	// Method to select a rental property to apply for
+	public void chooseRental() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter the propId for a property you wish to apply for");
+		String propId = sc.nextLine();
+		boolean choice = true;
+		while(choice) {
+			for(Property p : propertyList) {
+				if(p instanceof Rental) {
+					if(p.getPropId().equalsIgnoreCase(propId)) {
+						makeApplication(p);
+						choice = false;
+						return;
+					}
+				}
+			}
+			System.out.println("No property exists with that propId. Please enter a propId that exists, or enter 0 to exit");
+			propId = sc.nextLine();
+			if(propId.equals("0"))
+				choice = false;
+		}
+		
+	}
+	
+	private void makeApplication(Property p) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("How much rent would you like apply for?");
+		double offer = sc.nextDouble();
+		System.out.println("For how many months would you like to rent this property for?");
+		int contract = sc.nextInt();
+		p.makeApplication(offer, contract);
+	}
+	
+	// Default for listing all for sale properties
 	private void listSales() {
 		String details = "";
 		for(Property p : propertyList) {
@@ -410,11 +556,89 @@ public class RealEstateManager {
 				details += p.getDetails();
 			}
 		}
+		detailsCheck(details);
 		System.out.println(details);
+		chooseSale();
+		}
+	
+	// Shows all sales in the suburb specified
+	private void listSales(String suburb) {
+		String details = "";
+		for(Property p : propertyList) {
+			if(p instanceof Sale) {
+				if(p.getSuburb().equalsIgnoreCase(suburb))
+					details += p.getDetails();
+			}
+		}
+		detailsCheck(details);
+		System.out.println(details);
+		chooseSale();
 	}
-
+	
+	// Shows all sales in the price range specified
+	private void listSales(double amount, int search) {
+		String details = "";
+		if(search == 1) {
+			System.out.println("\nProperties with a minimum price of: " + amount + "\n");
+			for(Property p : propertyList) {
+				if(p instanceof Sale) {
+					if(((Sale) p).getPrice() >= amount) {
+						details += p.getDetails();
+					}
+				}
+			}
+		}else if(search == 2) {
+			System.out.println("\nProperties with a maximum price of: " + amount + "\n");
+			for(Property p : propertyList) {
+				if(p instanceof Sale) {
+					if(((Sale) p).getPrice() <= amount) {
+						details += p.getDetails();
+					}
+				}
+			}
+		}
+		detailsCheck(details);
+		System.out.println(details);
+		chooseSale();
+	}
+	
+	// Method to select a sale property to make an offer on
+	private void chooseSale() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter the propId for a property you wish to make an offer on - Offer must be at least the listed price");
+		String propId = sc.next();
+		boolean choice = true;
+		while(choice) {
+			for(Property p : propertyList) {
+				if(p instanceof Sale) {
+					if(p.getPropId().equalsIgnoreCase(propId)) {
+						makeOffer(p);
+						choice = false;
+						return;
+					}
+				}
+			}
+			System.out.println("No property exists with that propId. Please enter a propId that exists, or enter 0 to exit");
+			propId = sc.nextLine();
+			if(propId.equals("0"))
+				choice = false;
+		}
+	}
+	
+	private void makeOffer(Property p) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("How much would you like to purchase this property for?");
+		double offer = sc.nextDouble();
+		p.makeOffer(offer);
+	}
+	
+	private void detailsCheck(String details) {
+		if(details.equals(""))
+			System.out.println("No Properties match your search criteria");
+	}
+	
 	public static void main(String[] args) {
-
+		
 		RealEstateManager mr = new RealEstateManager(100, 100);
 		return;
 	}

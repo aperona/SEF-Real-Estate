@@ -30,8 +30,8 @@ public class Property {
 	
 	public String getDetails() {
 		String details = "";
-		details += String.format("%s\n%s\n%s\n%s\n%s\n%s\n%s\n", "Property: " + propId, "Address: " + address, "Suburb: " + suburb, "no. of bedrooms: " + bedrooms,
-				"no. of Bathrooms: " + bathrooms, "no. of Car Spaces: " + carSpaces, "Type: " + type);
+		details += String.format("%-20s%s\n%-20s%s\n%-20s%s\n%-20s%s\n%-20s%s\n%-20s%s\n%-20s%s\n", "Property: ", propId, "Address: ", address, "Suburb: ", suburb, "no. of bedrooms: ", bedrooms,
+				"no. of Bathrooms: ", bathrooms, "no. of Car Spaces: ", carSpaces, "Type: ", type);
 		return details;
 	}
 	
@@ -74,6 +74,16 @@ public class Property {
 		} else
 			propId = Integer.toString(id);
 		id++;
+	}
+	
+	public boolean makeOffer(double amount) {
+		System.out.println("Offer made on a property that is not for sale. This should not happen");
+		return false;
+	}
+	
+	public boolean makeApplication(double amount, int contract) {
+		System.out.println("Offer made on a property that is not for lease. This should not happen");
+		return false;
 	}
 	/*
 	 * Code removed - Added to RealEstateManager.
