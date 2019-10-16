@@ -1,12 +1,13 @@
+import java.util.ArrayList;
+import java.util.List;
 
 public class Rental extends Property {
 
 	private double weeklyRental;
 	private boolean discountQualified;
 	private int managementFee = 8;
-	private String contractDuration;
-	private double rentApplied;
-	private int contractApplied;
+	private int contractDuration;
+	private List<Application> applications = new ArrayList<>();
 	
 	// Constructor for Rental Object
 	public Rental(String propId, String address, String suburb, int bedrooms, int bathrooms, int carSpaces, String type, double rent) {
@@ -22,9 +23,15 @@ public class Rental extends Property {
 	
 	@Override
 	public boolean makeApplication(double amount, int contract) {
-		this.rentApplied = amount;
-		this.contractApplied = contract;
+		Application a = new Application(this, amount, contract);
+		applications.add(a);
 		return true;
+	}
+	
+	@Override
+	public void rent(double rent, int contract) {
+		this.weeklyRental = rent;
+		this.contractDuration = contract;
 	}
 	
 	// Getter for the rent double
