@@ -106,20 +106,21 @@ public class RealEstateManager {
 					((Customer) this.accountList[this.accountNum - 1]).setType(fields[3]);
 
 				}
-				// can be implemented later
-				// if (fields[2].equals("Employee")) {
-				// addEmployee(fields[0], fields[1], fields[2], fields[4], fields[5], fields[6],
-				// fields[7]);
-				//
-				// ((Employee) this.personList[this.personNum - 1]).setType(fields[3]);
-				//
-				//
-				// }
-				// if (fields[2].equals("Admin")) {
-				//
-				// addAdmin(fields[0], fields[1]);
-				//
-				// }
+				
+				
+				if (fields[0].equals("BranchAdmin")) {
+					Boolean work = Boolean.parseBoolean(fields[7]);
+					addBranchAdmin(fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], work);
+				}
+				if (fields[0].equals("PropertyManager")) {
+					Boolean work = Boolean.parseBoolean(fields[7]);
+					addPropertyManager(fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], work);
+				}
+				if (fields[0].equals("SalesConsultant")) {
+					Boolean work = Boolean.parseBoolean(fields[7]);
+					addSalesConsultant(fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], work);
+				}
+			
 				input = load.readLine();
 			}
 
@@ -138,8 +139,16 @@ public class RealEstateManager {
 		try {
 			BufferedWriter save = new BufferedWriter(new FileWriter(file));
 			int i = 0;
-			while (i < this.accountNum) {
+			while (i < this.accountNum) { 
+				if (this.accountList[i] instanceof BranchAdmin) {
+					save.write("BranchAdmin,"+this.accountList[i] + "\n");
+				}	else if (this.accountList[i] instanceof PropertyManager) {
+					save.write("PropertyManager,"+this.accountList[i] + "\n");
+				}else if (this.accountList[i] instanceof SalesConsultant) {
+					save.write("SalesConsultant,"+this.accountList[i] + "\n");
+				}else if(this.accountList[i] instanceof Customer) {
 				save.write(this.accountList[i] + "\n");
+				}
 				i++;
 			}
 			save.close();
