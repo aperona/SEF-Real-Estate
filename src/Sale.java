@@ -37,7 +37,11 @@ public class Sale extends Property {
 			return false;
 		}
 	}
-	
+	public String getDetailsSave() {
+		String details = super.getPropId()+","+ super.getAddress()+","+ super.getSuburb()+","+ super.getBedrooms()+","+ super.getBathrooms()+","+ super.getCarSpaces()+","+super.getType()+","+price;
+		
+		return details;
+	}
 	@Override
 	public void sell(double price) {
 		this.available = false;

@@ -54,7 +54,11 @@ public class Rental extends Property {
 		details += System.out.printf("%s, %s, %d, %d, %d, %s, %f", super.getAddress(), super.getSuburb(), super.getBedrooms(), super.getBathrooms(), super.getCarSpaces(), super.getType(), weeklyRental);
 		return details;
 	}
-
+	public String getDetailsRental() {
+		String details = super.getPropId()+","+ super.getAddress()+","+ super.getSuburb()+","+ super.getBedrooms()+","+ super.getBathrooms()+","+ super.getCarSpaces()+","+super.getType()+","+weeklyRental;
+		
+		return details;
+	}
 	// Getter for discount qualified boolean
 	public boolean isDiscountQualified() {
 		return discountQualified;

@@ -34,21 +34,24 @@ public class RealEstateManager {
 			input = load.readLine();
 			while (input != null) {
 				String[] fields = input.split(",");
-
-				Double price = Double.parseDouble(fields[6]);
-				int bedrooms = Integer.parseInt(fields[2]);
-				int bathrooms = Integer.parseInt(fields[3]);
-				int carSpaces = Integer.parseInt(fields[4]);
+			
+				
+				Double price = Double.parseDouble(fields[7]);
+				int bedrooms = Integer.parseInt(fields[3]);
+				int bathrooms = Integer.parseInt(fields[4]);
+				int carSpaces = Integer.parseInt(fields[5]);
 				if (price < 5000) {
-					addRental(fields[0], fields[1], bedrooms, bathrooms, carSpaces, fields[5],  price);
-
+					Property p = new Rental(fields[0], fields[1], fields[2], bedrooms, bathrooms, carSpaces, fields[6], price);
+					propertyList.add(p);
+				
 				}else {
-					addSale(fields[0], fields[1], bedrooms, bathrooms, carSpaces, fields[5],  price);
+					Property p = new Sale(fields[0], fields[1], fields[2], bedrooms, bathrooms, carSpaces, fields[6], price);
+					propertyList.add(p);
 				}
 
 				input = load.readLine();
 			}
-
+			
 			load.close();
 		}
 
@@ -77,8 +80,13 @@ public class RealEstateManager {
 	private String listPropertiesString() {
 		String details = "";
 		for (Property p : propertyList) {
-			details += p.getDetailsSave();
+			if(p instanceof Rental) {
+			details += ((Rental) p).getDetailsRental();
 			details += "\n";
+			}else {
+				details += ((Sale) p).getDetailsSave();
+				details += "\n";
+			}
 		}
 		return details;
 	}
@@ -145,23 +153,23 @@ public class RealEstateManager {
 		Scanner kb = new Scanner(System.in);
 ////		TODO: Remove this
 		addCustomer("a", "a", "a", "a", "a", "a", "a", "a");
-		addSale("1 a lane", "Melbourne", 0, 0, 0, "House", 600000);
-		addSale("2 lo street", "Melbourne", 0, 0, 0, "House", 750000);
-		addSale("3 hi street", "Fitzroy", 1, 1, 1, "Flat", 900000);
-		addSale("4 co street", "Melbourne", 2, 2, 2, "Unit", 100000);
-		addSale("15 dave road", "Melbourne", 3, 3, 3, "TownHouse", 200000);
-		addSale("6 ree road", "North Melbourne", 0, 0, 0, "Studio", 400000);
-		addRental("1000 koi place", "Richmond", 1, 1, 1, "Unit", 600);
-		addRental("11 bat street", "Batman", 1, 1, 1, "House", 500);
-		addRental("15 two grove", "Richmond", 1, 1, 1, "Flat", 400);
-		addRental("2 a road", "Richmond", 1, 1, 1, "TownHouse", 300);
-		addRental("20 joe Lane", "Hawksburn", 1, 2, 0, "Studio", 200);
-		addRental("60 the Road", "Brunswick", 1, 1, 1, "Unit", 100);
-		addRental("16 super lane", "Richmond", 1, 1, 1, "Unit", 700);
-		addRental("88 pie lane", "Shepparton", 1, 1, 1, "Unit", 800);
-		addRental("105 street street", "Frankston", 1, 1, 1, "Unit", 250);
-		addRental("500 nepean highway", "Richmond", 1, 1, 1, "Unit", 450);
-		addRental("17 err place", "Richmond", 1, 1, 1, "Unit", 600);
+//		addSale("1 a lane", "Melbourne", 0, 0, 0, "House", 600000);
+//		addSale("2 lo street", "Melbourne", 0, 0, 0, "House", 750000);
+//		addSale("3 hi street", "Fitzroy", 1, 1, 1, "Flat", 900000);
+//		addSale("4 co street", "Melbourne", 2, 2, 2, "Unit", 100000);
+//		addSale("15 dave road", "Melbourne", 3, 3, 3, "TownHouse", 200000);
+//		addSale("6 ree road", "North Melbourne", 0, 0, 0, "Studio", 400000);
+//		addRental("1000 koi place", "Richmond", 1, 1, 1, "Unit", 600);
+//		addRental("11 bat street", "Batman", 1, 1, 1, "House", 500);
+//		addRental("15 two grove", "Richmond", 1, 1, 1, "Flat", 400);
+//		addRental("2 a road", "Richmond", 1, 1, 1, "TownHouse", 300);
+//		addRental("20 joe Lane", "Hawksburn", 1, 2, 0, "Studio", 200);
+//		addRental("60 the Road", "Brunswick", 1, 1, 1, "Unit", 100);
+//		addRental("16 super lane", "Richmond", 1, 1, 1, "Unit", 700);
+//		addRental("88 pie lane", "Shepparton", 1, 1, 1, "Unit", 800);
+//		addRental("105 street street", "Frankston", 1, 1, 1, "Unit", 250);
+//		addRental("500 nepean highway", "Richmond", 1, 1, 1, "Unit", 450);
+//		addRental("17 err place", "Richmond", 1, 1, 1, "Unit", 600);
 		String menu = "Login\nPlease Make a Selection:\n1. Login\n2. Create Account\nTo locate account details \nplease talk to one of our staff";
 		System.out.println(menu);
 		int option = kb.nextInt();
