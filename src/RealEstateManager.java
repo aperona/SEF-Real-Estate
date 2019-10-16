@@ -8,8 +8,8 @@ public class RealEstateManager {
 	private List<Property> propertyList = new ArrayList<>();
 	private int accountNum;
 	private int propertyNum;
-	private int id;
-	int accessAccount;// position of the current logged in account on array
+	private int id; 
+	public int accessAccount;// position of the current logged in account on array
 
 	public RealEstateManager(int maxAccounts, int maxProperties) {
 		this.maxAccounts = maxAccounts;
@@ -62,9 +62,41 @@ public class RealEstateManager {
 		// for the first time and creates a admin account
 		catch (Exception e) {
 			System.out.println("Error! " + e.getMessage() + "\n No account data\nCreating Admin Account");
-			// createAdminPerson();
+			 createEmployee();
 		}
 		return;
+	}
+
+	private void createEmployee() {
+		Scanner kb = new Scanner(System.in);
+		System.out.println("Enter a username");
+		String username = kb.nextLine();
+		System.out.println("Enter a email");
+		String email = kb.nextLine();
+		System.out.println("Enter a password");
+		String password = kb.nextLine();
+		System.out.println("Enter your first name");
+		String name = kb.nextLine();
+		System.out.println("Enter your surname");
+		String surname = kb.nextLine();
+		System.out.println("Enter your phone number");
+		String phNumber = kb.nextLine();
+		System.out.println("Are you a landlord y/n");
+		String option = kb.nextLine();
+		
+
+		addEmployee(username, email, password,  name, surname, phNumber;
+		return;
+		
+	}
+
+	private void addEmployee(String username, String email, String password, String name, String surname,
+			String phNumber) {
+		this.accountList[this.accountNum] = new Employee(username, email, password, name, surname, phNumber);
+		this.accountNum += 1;
+
+		return;
+		
 	}
 
 	private void saveAccountData(String file) {
