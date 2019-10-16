@@ -101,7 +101,7 @@ public class RealEstateManager {
 
 				// reads the data to find which person the data belongs to field[2] contains the
 				// name of the subclass
-				if (fields[2].equals("Customer")) {
+				if (fields[3].equals("Customer")) {
 					addCustomer(fields[0], fields[1], fields[2], fields[4], fields[5], fields[6], fields[7], fields[8]);
 					((Customer) this.accountList[this.accountNum - 1]).setType(fields[3]);
 
@@ -152,7 +152,7 @@ public class RealEstateManager {
 	private void startLogin() {
 		Scanner kb = new Scanner(System.in);
 ////		TODO: Remove this
-		addCustomer("a", "a", "a", "a", "a", "a", "a", "a");
+		addCustomer("a", "a", "a", "a", "a", "a", "y", "y");
 //		addSale("1 a lane", "Melbourne", 0, 0, 0, "House", 600000);
 //		addSale("2 lo street", "Melbourne", 0, 0, 0, "House", 750000);
 //		addSale("3 hi street", "Fitzroy", 1, 1, 1, "Flat", 900000);
