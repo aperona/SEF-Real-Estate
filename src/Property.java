@@ -31,6 +31,11 @@ public class Property {
 				"no. of Bathrooms: ", bathrooms, "no. of Car Spaces: ", carSpaces, "Type: ", type);
 		return details;
 	}
+	public String getDetailsSave() {
+		String details = propId+","+ address+","+ suburb+","+ bedrooms+","+ bathrooms+","+ carSpaces+","+type;
+		
+		return details;
+	}
 	
 	public String getAddress() {
 		return address;
