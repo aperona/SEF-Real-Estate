@@ -8,8 +8,6 @@ public class Property {
 	private int carSpaces;
 	private String type;
 	private String propId;
-	private static int id;
-	private String description;
 
 	public Property(String propId, String address, String suburb, int bedrooms, int bathrooms, int carSpaces, String type) {
 		this.propId = propId;
@@ -19,7 +17,6 @@ public class Property {
 		this.bathrooms = bathrooms;
 		this.carSpaces = carSpaces;
 		this.type = type;
-		setPropId();
 	}
 	
 	public String toString() {
@@ -67,18 +64,17 @@ public class Property {
 		return propId;
 	}
 	
-
-	private void setPropId() {
-		if(id < 10) {
-			propId = "0" + Integer.toString(id);
-		} else
-			propId = Integer.toString(id);
-		id++;
-	}
-	
 	public boolean makeOffer(double amount) {
 		System.out.println("Offer made on a property that is not for sale. This should not happen");
 		return false;
+	}
+	
+	public void sell(double amount) {
+		
+	}
+	
+	public void rent(double amount, int contract) {
+		
 	}
 	
 	public boolean makeApplication(double amount, int contract) {

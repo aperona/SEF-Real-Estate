@@ -1,15 +1,16 @@
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Sale extends Property {
 
 	private double price;
 	private boolean offerMade;
-	private Date offerDate;
 	private double percent;
 	private double commission = (price / 100) * percent;
-	private double offer;
 	private boolean section32;
-	private String buyer;
+	private boolean available;
+	private List<Application> applications = new ArrayList<>();
 	
 	// Constructor for the Sale Object
 	public Sale(String propId, String address, String suburb, int bedrooms, int bathrooms, int carSpaces, String type, double price) {
@@ -25,16 +26,21 @@ public class Sale extends Property {
 	
 	@Override
 	public boolean makeOffer(double amount) {
-		if(amount >= price || amount > offer) {
-			this.offer = amount;
+		if(amount >= price) {
 			offerMade = true;
-			offerDate = new Date();
+			Application a = new Application(this, amount);
+			applications.add(a);
 			System.out.println("Your offer has been posted");
 			return true;
 		}else {
 			System.out.println("Offer must be greater or equal to minimum asking price");
 			return false;
 		}
+	}
+	
+	@Override
+	public void sell(double price) {
+		this.available = false;
 	}
 	
 	// getter for price double
@@ -60,16 +66,6 @@ public class Sale extends Property {
 			this.percent = percent;
 			return true;
 		}
-	}
-	
-	// getter for offer double
-	public double getOffer() {
-		return offer;
-	}
-	
-    // setter for offer double
-	public void setOffer(double offer) {
-		this.offer = offer;
 	}
 	
 	// getter for section32 boolean

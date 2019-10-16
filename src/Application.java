@@ -23,5 +23,4 @@ public class Application {
 			p.rent(amount, contractLength);
 		}
 	}
-	
 }
