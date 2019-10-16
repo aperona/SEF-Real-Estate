@@ -85,7 +85,7 @@ public class RealEstateManager {
 		String option = kb.nextLine();
 		
 
-		addEmployee(username, email, password,  name, surname, phNumber;
+		addEmployee(username, email, password,  name, surname, phNumber);
 		return;
 		
 	}
@@ -249,14 +249,14 @@ public class RealEstateManager {
 
 	private void accountManager() {
 		Scanner kb = new Scanner(System.in);
-		String menu = "Account Management\nPlease Make a Selection:\n1. Apply to be a vendor\nApply to be a landlord\nType 0 to log out";
+		String menu = "Account Management\nPlease Make a Selection:\n1. Create new Employee account\nType 0 to log out";
 		System.out.println(menu);
 		int option = kb.nextInt();
 		// as long as a user doesn't cancel it the menu will appear
 
 		while (option != 0) {
 			if (option == 1) {
-
+				createEmployee();
 			} else if (option == 2) {
 
 			} else {
