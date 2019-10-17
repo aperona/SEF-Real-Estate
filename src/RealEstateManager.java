@@ -408,7 +408,7 @@ public class RealEstateManager {
 		this.accountList[this.accountNum] = new Customer(username, email, password, name, surname, phNumber, landLord,
 				vendor);
 		this.accountNum += 1;
-
+		System.out.println("Customer created");
 		return;
 
 	}
