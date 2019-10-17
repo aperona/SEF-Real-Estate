@@ -161,25 +161,25 @@ public class RealEstateManager {
 	private void startLogin() {
 		Scanner kb = new Scanner(System.in);
 ////		TODO: Remove this
-		addCustomer("a", "a", "a", "a", "a", "a", "y", "y");
-//		addSale("1 a lane", "Melbourne", 0, 0, 0, "House", 600000);
-//		addSale("2 lo street", "Melbourne", 0, 0, 0, "House", 750000);
-//		addSale("3 hi street", "Fitzroy", 1, 1, 1, "Flat", 900000);
-//		addSale("4 co street", "Melbourne", 2, 2, 2, "Unit", 100000);
-//		addSale("15 dave road", "Melbourne", 3, 3, 3, "TownHouse", 200000);
-//		addSale("6 ree road", "North Melbourne", 0, 0, 0, "Studio", 400000);
-//		addRental("1000 koi place", "Richmond", 1, 1, 1, "Unit", 600);
-//		addRental("11 bat street", "Batman", 1, 1, 1, "House", 500);
-//		addRental("15 two grove", "Richmond", 1, 1, 1, "Flat", 400);
-//		addRental("2 a road", "Richmond", 1, 1, 1, "TownHouse", 300);
-//		addRental("20 joe Lane", "Hawksburn", 1, 2, 0, "Studio", 200);
-//		addRental("60 the Road", "Brunswick", 1, 1, 1, "Unit", 100);
-//		addRental("16 super lane", "Richmond", 1, 1, 1, "Unit", 700);
-//		addRental("88 pie lane", "Shepparton", 1, 1, 1, "Unit", 800);
-//		addRental("105 street street", "Frankston", 1, 1, 1, "Unit", 250);
-//		addRental("500 nepean highway", "Richmond", 1, 1, 1, "Unit", 450);
-//		addRental("17 err place", "Richmond", 1, 1, 1, "Unit", 600);
-		String menu = "Login\nPlease Make a Selection:\n1. Login\n2. Create Account\nTo locate account details \nplease talk to one of our staff";
+//		addCustomer("a", "a", "a", "a", "a", "a", "y", "y");
+////		addSale("1 a lane", "Melbourne", 0, 0, 0, "House", 600000);
+////		addSale("2 lo street", "Melbourne", 0, 0, 0, "House", 750000);
+////		addSale("3 hi street", "Fitzroy", 1, 1, 1, "Flat", 900000);
+////		addSale("4 co street", "Melbourne", 2, 2, 2, "Unit", 100000);
+////		addSale("15 dave road", "Melbourne", 3, 3, 3, "TownHouse", 200000);
+////		addSale("6 ree road", "North Melbourne", 0, 0, 0, "Studio", 400000);
+////		addRental("1000 koi place", "Richmond", 1, 1, 1, "Unit", 600);
+////		addRental("11 bat street", "Batman", 1, 1, 1, "House", 500);
+////		addRental("15 two grove", "Richmond", 1, 1, 1, "Flat", 400);
+////		addRental("2 a road", "Richmond", 1, 1, 1, "TownHouse", 300);
+////		addRental("20 joe Lane", "Hawksburn", 1, 2, 0, "Studio", 200);
+////		addRental("60 the Road", "Brunswick", 1, 1, 1, "Unit", 100);
+////		addRental("16 super lane", "Richmond", 1, 1, 1, "Unit", 700);
+////		addRental("88 pie lane", "Shepparton", 1, 1, 1, "Unit", 800);
+////		addRental("105 street street", "Frankston", 1, 1, 1, "Unit", 250);
+////		addRental("500 nepean highway", "Richmond", 1, 1, 1, "Unit", 450);
+////		addRental("17 err place", "Richmond", 1, 1, 1, "Unit", 600);
+		String menu = "Login\nPlease Make a Selection:\n1. Login\n2. Create Account\nTo locate account details \nplease talk to one of our staff\nType 0 to close application";
 		System.out.println(menu);
 		int option = kb.nextInt();
 		// as long as a user doesn't cancel it the menu will appear
@@ -222,7 +222,7 @@ public class RealEstateManager {
 					openMenu();
 
 				}
-				if ((this.accountList[i]) instanceof Employee) {
+				if ((this.accountList[i]) instanceof Employee||(this.accountList[i]) instanceof BranchAdmin||(this.accountList[i]) instanceof PropertyManager||(this.accountList[i]) instanceof SalesConsultant) {
 					// accessLevel = 1;
 					accessAccount = i;
 					openEmployeeMenu();
@@ -373,24 +373,26 @@ public class RealEstateManager {
 	private void addBranchAdmin(String username, String email, String password, String name, String surname,
 			String phNumber, boolean workType) {
 		String empId = setEmpId();
-		Employee e = new BranchAdmin(empId, username, email, password, name, surname, phNumber, workType);
-		employeeList.add(e);
+		this.accountList[this.accountNum] = new BranchAdmin(empId, username, email, password, name, surname, phNumber, workType);
+		this.accountNum += 1;
 		System.out.println("Branch Administrator created");
 	}
 
 	private void addPropertyManager(String username, String email, String password, String name, String surname,
 			String phNumber, boolean workType) {
 		String empId = setEmpId();
-		Employee e = new PropertyManager(empId, username, email, password, name, surname, phNumber, workType);
-		employeeList.add(e);
+		this.accountList[this.accountNum] = new PropertyManager(empId, username, email, password, name, surname, phNumber, workType);
+		this.accountNum += 1;
 		System.out.println("Property Manager created");
 	}
 
 	private void addSalesConsultant(String username, String email, String password, String name, String surname,
 			String phNumber, boolean workType) {
 		String empId = setEmpId();
-		Employee e = new SalesConsultant(empId, username, email, password, name, surname, phNumber, workType);
-		employeeList.add(e);
+		
+		
+		this.accountList[this.accountNum] = new SalesConsultant(empId, username, email, password, name, surname, phNumber, workType);
+		this.accountNum += 1;
 		System.out.println("Sales Consultant created");
 	}
 
