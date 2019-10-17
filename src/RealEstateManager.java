@@ -197,7 +197,7 @@ public class RealEstateManager {
 				browseProperties();
 			} else if (option == 2) {
 				System.out.println(listProperties());
-			}else if (option == 3) {
+			} else if (option == 3) {
 				accountManager();
 			} else if (option == 4) {
 				makeProperty();
@@ -233,6 +233,8 @@ public class RealEstateManager {
 	}
 
 	private void createCustomer() {
+		String custType = null;
+		String prefSuburb = null;
 		System.out.println("*****************************");
 		Scanner kb = new Scanner(System.in);
 		System.out.println("Enter a username");
@@ -259,31 +261,52 @@ public class RealEstateManager {
 		if (option.matches("y")) {
 			vendor = "true";
 		}
+		if (landLord == "false" && vendor == "false") {
+			System.out.println("Are you after a rental (a) or forsale property (b) ? a/b");
+			option = kb.nextLine();
+			if (option.matches("a")) {
+				custType = "Renter";
+			} else if (option.matches("b")) {
+				custType = "Buyer";
+			}
+			System.out.println("What is your preferred suburb for searching for properties?");
+			prefSuburb = kb.nextLine();
+		}
 		System.out.println("   ");
 		System.out.println("*****************************");
-		System.out.println("Username: "+username);
-		System.out.println("Email: "+email);
-		System.out.println("Password: "+password);
-		System.out.println("First name: "+name);
-		System.out.println("Surname: "+surname);
-		System.out.println("Phone number: "+phNumber);
-		if (landLord== "true")
-		{
+		System.out.println("Username: " + username);
+		System.out.println("Email: " + email);
+		System.out.println("Password: " + password);
+		System.out.println("First name: " + name);
+		System.out.println("Surname: " + surname);
+		System.out.println("Phone number: " + phNumber);
+		if (landLord == "true") {
 			System.out.println("You are a landlord");
 		}
 		if (vendor == "true") {
 			System.out.println("You are a vendor");
 		}
+		if (landLord == "false" && vendor == "false") {
+			System.out.println("You are a " + custType);
+		}
 		System.out.println("*****************************");
 		System.out.println("To verify, is all this correct? y/n");
 		option = kb.nextLine();
-		if (option.matches("y")) {
+		if (landLord == "true" || vendor == "true") {
 			addCustomer(username, email, password, name, surname, phNumber, landLord, vendor);
-			System.out.println("Welcome " + username+"!");
+			System.out.println("Welcome " + username + "!");
+			return;
 		}
-		
-		return;
-
+		if (custType == "Renter") {
+			addRenter(username, email, password, name, surname, phNumber, landLord, vendor, prefSuburb);
+			System.out.println("Welcome " + username + "!");
+			return;
+		}
+		if (custType == "Buyer") {
+			addBuyer(username, email, password, name, surname, phNumber, landLord, vendor, prefSuburb);
+			System.out.println("Welcome " + username + "!");
+			return;
+		}
 	}
 
 	private void createEmployee() {
@@ -303,49 +326,53 @@ public class RealEstateManager {
 		System.out.println("Will you be: \n1. Part-Time \n2. Full-Time");
 		int empType = kb.nextInt();
 		boolean workType = true;
-		if(empType == 1) {
+		if (empType == 1) {
 			workType = false;
 		}
-		System.out.println("Which position are you working in? - \n1. Branch Admin \n2. Property Manager \n3. Sales Consultant");
+		System.out.println(
+				"Which position are you working in? - \n1. Branch Admin \n2. Property Manager \n3. Sales Consultant");
 		int position = kb.nextInt();
-		if(position == 1) {
+		if (position == 1) {
 			addBranchAdmin(username, email, password, name, surname, phNumber, workType);
-		}else if(position == 2) { 
+		} else if (position == 2) {
 			addPropertyManager(username, email, password, name, surname, phNumber, workType);
-		}else if(position == 3) {
+		} else if (position == 3) {
 			addSalesConsultant(username, email, password, name, surname, phNumber, workType);
 		}
 		return;
 	}
-	
-	private void addBranchAdmin(String username, String email, String password, String name, String surname, String phNumber, boolean workType) {
+
+	private void addBranchAdmin(String username, String email, String password, String name, String surname,
+			String phNumber, boolean workType) {
 		String empId = setEmpId();
 		Employee e = new BranchAdmin(empId, username, email, password, name, surname, phNumber, workType);
 		employeeList.add(e);
 		System.out.println("Branch Administrator created");
 	}
-	
-	private void addPropertyManager(String username, String email, String password, String name, String surname, String phNumber, boolean workType) {
+
+	private void addPropertyManager(String username, String email, String password, String name, String surname,
+			String phNumber, boolean workType) {
 		String empId = setEmpId();
 		Employee e = new PropertyManager(empId, username, email, password, name, surname, phNumber, workType);
 		employeeList.add(e);
 		System.out.println("Property Manager created");
 	}
-	
-	private void addSalesConsultant(String username, String email, String password, String name, String surname, String phNumber, boolean workType) {
+
+	private void addSalesConsultant(String username, String email, String password, String name, String surname,
+			String phNumber, boolean workType) {
 		String empId = setEmpId();
 		Employee e = new SalesConsultant(empId, username, email, password, name, surname, phNumber, workType);
 		employeeList.add(e);
 		System.out.println("Sales Consultant created");
 	}
-	
+
 	private String setEmpId() {
 		String empId;
 		empId = String.format("%1$01d", id);
 		id++;
 		return empId;
 	}
-	
+
 	private void addCustomer(String username, String email, String password, String name, String surname,
 			String phNumber, String landLord, String vendor) {
 		this.accountList[this.accountNum] = new Customer(username, email, password, name, surname, phNumber, landLord,
@@ -355,7 +382,27 @@ public class RealEstateManager {
 		return;
 
 	}
-	
+
+	private void addBuyer(String username, String email, String password, String name, String surname, String phNumber,
+			String landLord, String vendor, String prefSuburb) {
+		this.accountList[this.accountNum] = new Buyer(username, email, password, name, surname, phNumber, landLord,
+				vendor, prefSuburb);
+		this.accountNum += 1;
+
+		return;
+
+	}
+
+	private void addRenter(String username, String email, String password, String name, String surname, String phNumber,
+			String landLord, String vendor, String prefSuburb) {
+		this.accountList[this.accountNum] = new Renter(username, email, password, name, surname, phNumber, landLord,
+				vendor, prefSuburb);
+		this.accountNum += 1;
+
+		return;
+
+	}
+
 	private void makeProperty() {
 		Scanner sc = new Scanner(System.in);
 		String propType;
@@ -373,35 +420,37 @@ public class RealEstateManager {
 		System.out.println("How many car spaces does your " + type + " have?");
 		int carSpaces = sc.nextInt();
 		System.out.println("Would you like to make a property to sell, or to lease?\n1. Sell: \n2. Lease:");
-		if(sc.nextInt() == 1) {
+		if (sc.nextInt() == 1) {
 			propType = "Sale";
-			System.out.println("You selected a Sale property\nWhat is the minimum you would like to list this property for?");
+			System.out.println(
+					"You selected a Sale property\nWhat is the minimum you would like to list this property for?");
 			price = sc.nextDouble();
-		}else {
+		} else {
 			propType = "Rental";
 			System.out.println("You selected a Rental property\nHow much would you like to charge for rent per week?");
 			price = sc.nextDouble();
 		}
 		int choice = 0;
-		while(choice != 1 || choice != 2) {
+		while (choice != 1 || choice != 2) {
 			System.out.println("Confirm the adding of your property: \nType 1 for yes:\nType 2 for no:");
 			choice = sc.nextInt();
-			if(choice == 1) {
-				if(propType.equalsIgnoreCase("sale")) {
+			if (choice == 1) {
+				if (propType.equalsIgnoreCase("sale")) {
 					addSale(address, suburb, bedrooms, bathrooms, carSpaces, type, price);
 				}
-				if(propType.equalsIgnoreCase("rental")) {
+				if (propType.equalsIgnoreCase("rental")) {
 					addRental(address, suburb, bedrooms, bathrooms, carSpaces, type, price);
 				}
 				return;
-			}else if(choice == 2){
-				System.out.println("*********************************************\nProperty Not Created - Returning to Main Menu\n*********************************************");
+			} else if (choice == 2) {
+				System.out.println(
+						"*********************************************\nProperty Not Created - Returning to Main Menu\n*********************************************");
 				return;
-			}else {
+			} else {
 				System.out.println("Re-enter your choice");
 			}
 		}
-		
+
 	}
 
 	private void addProperty(String address, String suburb, int bedrooms, int bathrooms, int carSpaces, String type) {
@@ -494,7 +543,7 @@ public class RealEstateManager {
 				System.out.println("Enter the rent");
 				double amount = kb.nextDouble();
 				listRentals(amount, search);
-				
+
 			} else if (option == 4) {
 
 			} else {
@@ -505,7 +554,7 @@ public class RealEstateManager {
 			option = kb.nextInt();
 		}
 	}
-	
+
 	private void lookSale() {
 		Scanner kb = new Scanner(System.in);
 		String menu = "For Sale Lookup\nPlease Make a Selection:\n1.List All For Sale Properties \n2. Search Sales by suburb \n3. Search Sales by price\nType 0 to return to Property Lookup.";
@@ -539,88 +588,89 @@ public class RealEstateManager {
 			option = kb.nextInt();
 		}
 	}
-	
+
 	// Default for listing all rentals
 	private void listRentals() {
 		String details = "";
-		for(Property p : propertyList) {
-			if(p instanceof Rental) {
+		for (Property p : propertyList) {
+			if (p instanceof Rental) {
 				details += p.getDetails();
 			}
 		}
 		System.out.println(details);
-		if(detailsCheck(details))
+		if (detailsCheck(details))
 			chooseRental();
 	}
 
 	// Shows all rentals in the suburb specified
 	private void listRentals(String suburb) {
 		String details = "";
-		for(Property p : propertyList) {
-			if(p instanceof Rental) {
-				if(p.getSuburb().equalsIgnoreCase(suburb)) {
+		for (Property p : propertyList) {
+			if (p instanceof Rental) {
+				if (p.getSuburb().equalsIgnoreCase(suburb)) {
 					details += p.getDetails();
 				}
 			}
 		}
 		System.out.println(details);
-		if(detailsCheck(details))
+		if (detailsCheck(details))
 			chooseRental();
 	}
-	
+
 	// Shows all rentals in the price range specified
 	private void listRentals(double amount, int search) {
 		String details = "";
-		if(search == 1) {
+		if (search == 1) {
 			System.out.println("\nProperties with a minimum price of: " + amount + "\n");
-			for(Property p : propertyList) {
-				if(p instanceof Rental) {
-					if(((Rental) p).getRent() >= amount) {
+			for (Property p : propertyList) {
+				if (p instanceof Rental) {
+					if (((Rental) p).getRent() >= amount) {
 						details += p.getDetails();
 					}
 				}
 			}
-		}else if(search == 2) {
+		} else if (search == 2) {
 			System.out.println("\nProperties with a maximum price of: " + amount + "\n");
-			for(Property p : propertyList) {
-				if(p instanceof Rental) {
-					if(((Rental) p).getRent() <= amount) {
+			for (Property p : propertyList) {
+				if (p instanceof Rental) {
+					if (((Rental) p).getRent() <= amount) {
 						details += p.getDetails();
 					}
 				}
 			}
 		}
 		System.out.println(details);
-		if(detailsCheck(details))
+		if (detailsCheck(details))
 			chooseRental();
 	}
-	
+
 	// Method to select a rental property to apply for
 	public void chooseRental() {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter the propId for a property you wish to apply for, or 0 to exit");
 		String propId = sc.nextLine();
-		if(propId.equals("0"))
+		if (propId.equals("0"))
 			return;
 		boolean choice = true;
-		while(choice) {
-			for(Property p : propertyList) {
-				if(p instanceof Rental) {
-					if(p.getPropId().equalsIgnoreCase(propId)) {
+		while (choice) {
+			for (Property p : propertyList) {
+				if (p instanceof Rental) {
+					if (p.getPropId().equalsIgnoreCase(propId)) {
 						makeApplication(p);
 						choice = false;
 						return;
 					}
 				}
 			}
-			System.out.println("No property exists with that propId. Please enter a propId that exists, or enter 0 to exit");
+			System.out.println(
+					"No property exists with that propId. Please enter a propId that exists, or enter 0 to exit");
 			propId = sc.nextLine();
-			if(propId.equals("0"))
+			if (propId.equals("0"))
 				choice = false;
 		}
-		
+
 	}
-	
+
 	private void makeApplication(Property p) {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("How much rent would you like apply for?");
@@ -629,103 +679,105 @@ public class RealEstateManager {
 		int contract = sc.nextInt();
 		p.makeApplication(offer, contract);
 	}
-	
+
 	// Default for listing all for sale properties
 	private void listSales() {
 		String details = "";
-		for(Property p : propertyList) {
-			if(p instanceof Sale) {
+		for (Property p : propertyList) {
+			if (p instanceof Sale) {
 				details += p.getDetails();
 			}
 		}
 		System.out.println(details);
-		if(detailsCheck(details))
+		if (detailsCheck(details))
 			chooseSale();
-		}
-	
+	}
+
 	// Shows all sales in the suburb specified
 	private void listSales(String suburb) {
 		String details = "";
-		for(Property p : propertyList) {
-			if(p instanceof Sale) {
-				if(p.getSuburb().equalsIgnoreCase(suburb))
+		for (Property p : propertyList) {
+			if (p instanceof Sale) {
+				if (p.getSuburb().equalsIgnoreCase(suburb))
 					details += p.getDetails();
 			}
 		}
 		System.out.println(details);
-		if(detailsCheck(details))
+		if (detailsCheck(details))
 			chooseSale();
 	}
-	
+
 	// Shows all sales in the price range specified
 	private void listSales(double amount, int search) {
 		String details = "";
-		if(search == 1) {
+		if (search == 1) {
 			System.out.println("\nProperties with a minimum price of: " + amount + "\n");
-			for(Property p : propertyList) {
-				if(p instanceof Sale) {
-					if(((Sale) p).getPrice() >= amount) {
+			for (Property p : propertyList) {
+				if (p instanceof Sale) {
+					if (((Sale) p).getPrice() >= amount) {
 						details += p.getDetails();
 					}
 				}
 			}
-		}else if(search == 2) {
+		} else if (search == 2) {
 			System.out.println("\nProperties with a maximum price of: " + amount + "\n");
-			for(Property p : propertyList) {
-				if(p instanceof Sale) {
-					if(((Sale) p).getPrice() <= amount) {
+			for (Property p : propertyList) {
+				if (p instanceof Sale) {
+					if (((Sale) p).getPrice() <= amount) {
 						details += p.getDetails();
 					}
 				}
 			}
 		}
 		System.out.println(details);
-		if(detailsCheck(details))
+		if (detailsCheck(details))
 			chooseSale();
 	}
-	
+
 	// Method to select a sale property to make an offer on
 	private void chooseSale() {
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Enter the propId for a property you wish to make an offer on - Offer must be at least the listed price, or enter 0 to exit");
+		System.out.println(
+				"Enter the propId for a property you wish to make an offer on - Offer must be at least the listed price, or enter 0 to exit");
 		String propId = sc.next();
-		if(propId.equals("0"))
+		if (propId.equals("0"))
 			return;
 		boolean choice = true;
-		while(choice) {
-			for(Property p : propertyList) {
-				if(p instanceof Sale) {
-					if(p.getPropId().equalsIgnoreCase(propId)) {
+		while (choice) {
+			for (Property p : propertyList) {
+				if (p instanceof Sale) {
+					if (p.getPropId().equalsIgnoreCase(propId)) {
 						makeOffer(p);
 						choice = false;
 						return;
 					}
 				}
 			}
-			System.out.println("No property exists with that propId. Please enter a propId that exists, or enter 0 to exit");
+			System.out.println(
+					"No property exists with that propId. Please enter a propId that exists, or enter 0 to exit");
 			propId = sc.nextLine();
-			if(propId.equals("0"))
+			if (propId.equals("0"))
 				choice = false;
 		}
 	}
-	
+
 	private void makeOffer(Property p) {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("How much would you like to purchase this property for?");
 		double offer = sc.nextDouble();
 		p.makeOffer(offer);
 	}
-	
+
 	private boolean detailsCheck(String details) {
-		if(details.equals("")) {
+		if (details.equals("")) {
 			System.out.println("No Properties match your search criteria");
 			return false;
 		}
 		return true;
 	}
-	
+
 	public static void main(String[] args) {
-		
+
 		RealEstateManager mr = new RealEstateManager(100, 100);
 		return;
 	}
