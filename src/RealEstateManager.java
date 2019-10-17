@@ -113,7 +113,7 @@ public class RealEstateManager {
 		while (option != 0) {
 			if (option == 1) {
 
-				checkLogin();
+				checkLogin(null, null);
 
 			} else if (option == 2) {
 				System.out.println("create a customer account");
@@ -129,12 +129,12 @@ public class RealEstateManager {
 
 	}
 
-	void checkLogin() {
+	void checkLogin(String username, String password) {
 		Scanner kb = new Scanner(System.in);
 		System.out.println("Enter Your Username:");
-		String username = kb.nextLine();
+		 username = kb.nextLine();
 		System.out.println("Enter Your Password:");
-		String password = kb.nextLine();
+		 password = kb.nextLine();
 		int i = 0;
 		while (i < this.accountNum) {
 			if ((this.accountList[i]).getUsername().equals(username)
@@ -295,16 +295,19 @@ public class RealEstateManager {
 		if (landLord == "true" || vendor == "true") {
 			addCustomer(username, email, password, name, surname, phNumber, landLord, vendor);
 			System.out.println("Welcome " + username + "!");
+			checkLogin(username, password);
 			return;
 		}
 		if (custType == "Renter") {
 			addRenter(username, email, password, name, surname, phNumber, landLord, vendor, prefSuburb);
 			System.out.println("Welcome " + username + "!");
+			checkLogin(username, password);
 			return;
 		}
 		if (custType == "Buyer") {
 			addBuyer(username, email, password, name, surname, phNumber, landLord, vendor, prefSuburb);
 			System.out.println("Welcome " + username + "!");
+			checkLogin(username, password);
 			return;
 		}
 	}
