@@ -6,7 +6,6 @@ public class RealEstateManager {
 	private int maxProperties;
 	private Account[] accountList;
 	private List<Property> propertyList = new ArrayList<>();
-	private List<Employee> employeeList = new ArrayList<>();
 	private int accountNum;
 	private int propertyNum;
 	private int id;
@@ -38,32 +37,16 @@ public class RealEstateManager {
 				if (fields[2].equals("Customer")) {
 					addCustomer(fields[0], fields[1], fields[2], fields[4], fields[5], fields[6], fields[7], fields[8]);
 					((Customer) this.accountList[this.accountNum - 1]).setType(fields[3]);
-
 				}
-				// can be implemented later
-				// if (fields[2].equals("Employee")) {
-				// addEmployee(fields[0], fields[1], fields[2], fields[4], fields[5], fields[6],
-				// fields[7]);
-				//
-				// ((Employee) this.personList[this.personNum - 1]).setType(fields[3]);
-				//
-				//
-				// }
-				// if (fields[2].equals("Admin")) {
-				//
-				// addAdmin(fields[0], fields[1]);
-				//
-				// }
 				input = load.readLine();
 			}
 
 			load.close();
 		}
 		// if there is no person data available the program assumes that it is being ran
-		// for the first time and creates a admin account
+		// for the first time
 		catch (Exception e) {
 			System.out.println("Error! " + e.getMessage() + "\n No account data\nCreating Admin Account");
-			// createAdminPerson();
 		}
 		return;
 	}
@@ -105,7 +88,7 @@ public class RealEstateManager {
 		addRental("105 street street", "Frankston", 1, 1, 1, "Unit", 250);
 		addRental("500 nepean highway", "Richmond", 1, 1, 1, "Unit", 450);
 		addRental("17 err place", "Richmond", 1, 1, 1, "Unit", 600);
-		String menu = "Login\nPlease Make a Selection:\n1. Login\n2. Create Account\nTo locate account details \nplease talk to one of our staff";
+		String menu = "Login\nPlease Make a Selection:\n1. Login\n2. Create Customer Account \n3. Create Employee Account\nTo locate account details \nplease talk to one of our staff";
 		System.out.println(menu);
 		int option = kb.nextInt();
 		// as long as a user doesn't cancel it the menu will appear
@@ -119,6 +102,10 @@ public class RealEstateManager {
 				System.out.println("create a customer account");
 				createCustomer();
 
+			} else if (option == 3) {
+				System.out.println("create an employee account");
+				createEmployee();
+
 			} else {
 				System.out.println("Invalid Entry");// if the user enters anything other than 1-4
 
@@ -131,11 +118,33 @@ public class RealEstateManager {
 
 	void checkLogin(String username, String password) {
 		Scanner kb = new Scanner(System.in);
+		int i = 0;
+		while (i < this.accountNum) {
+			if ((this.accountList[i]).getUsername().equals(username)
+					&& (this.accountList[i]).getPassword().equals(password)) {
+
+				System.out.println("Success!");
+
+				if ((this.accountList[i]) instanceof Customer) {
+					// accessLevel = 0;
+					accessAccount = i;
+					openMenu();
+					return;
+				}
+				if ((this.accountList[i]) instanceof Employee) {
+					// accessLevel = 1;
+					accessAccount = i;
+					openEmployeeMenu();
+					return;
+				}
+			}
+			i++;
+		}
 		System.out.println("Enter Your Username:");
 		 username = kb.nextLine();
 		System.out.println("Enter Your Password:");
 		 password = kb.nextLine();
-		int i = 0;
+		i = 0;
 		while (i < this.accountNum) {
 			if ((this.accountList[i]).getUsername().equals(username)
 					&& (this.accountList[i]).getPassword().equals(password)) {
@@ -233,90 +242,100 @@ public class RealEstateManager {
 	}
 
 	private void createCustomer() {
-		String custType = null;
-		String prefSuburb = null;
-		System.out.println("*****************************");
-		Scanner kb = new Scanner(System.in);
-		System.out.println("Enter a username");
-		String username = kb.nextLine();
-		System.out.println("Enter a email");
-		String email = kb.nextLine();
-		System.out.println("Enter a password");
-		String password = kb.nextLine();
-		System.out.println("Enter your first name");
-		String name = kb.nextLine();
-		System.out.println("Enter your surname");
-		String surname = kb.nextLine();
-		System.out.println("Enter your phone number");
-		String phNumber = kb.nextLine();
-		System.out.println("Are you a landlord y/n");
-		String option = kb.nextLine();
-		String landLord = "false";
-		if (option.matches("y")) {
-			landLord = "true";
-		}
-		System.out.println("Are you a vendor y/n");
-		option = kb.nextLine();
-		String vendor = "false";
-		if (option.matches("y")) {
-			vendor = "true";
-		}
-		if (landLord == "false" && vendor == "false") {
-			System.out.println("Are you after a rental (a) or forsale property (b) ? a/b");
-			option = kb.nextLine();
-			if (option.matches("a")) {
-				custType = "Renter";
-			} else if (option.matches("b")) {
-				custType = "Buyer";
+		boolean choice = true;
+		while(choice) {
+			String custType = null;
+			String prefSuburb = null;
+			System.out.println("*****************************");
+			Scanner kb = new Scanner(System.in);
+			System.out.println("Enter a username");
+			String username = kb.nextLine();
+			System.out.println("Enter a email");
+			String email = kb.nextLine();
+			System.out.println("Enter a password");
+			String password = kb.nextLine();
+			System.out.println("Enter your first name");
+			String name = kb.nextLine();
+			System.out.println("Enter your surname");
+			String surname = kb.nextLine();
+			System.out.println("Enter your phone number");
+			String phNumber = kb.nextLine();
+			System.out.println("Are you a landlord y/n");
+			String option = kb.nextLine();
+			String landLord = "false";
+			if (option.matches("y")) {
+				landLord = "true";
 			}
-			System.out.println("What is your preferred suburb for searching for properties?");
-			prefSuburb = kb.nextLine();
+			System.out.println("Are you a vendor y/n");
+			option = kb.nextLine();
+			String vendor = "false";
+			if (option.matches("y")) {
+				vendor = "true";
+			}
+			if (landLord == "false" && vendor == "false") {
+				System.out.println("Are you after a rental (a) or forsale property (b) ? a/b");
+				option = kb.nextLine();
+				if (option.matches("a")) {
+					custType = "Renter";
+				} else if (option.matches("b")) {
+					custType = "Buyer";
+				}
+				System.out.println("What is your preferred suburb for searching for properties?");
+				prefSuburb = kb.nextLine();
+			}
+			System.out.println("   ");
+			System.out.println("*****************************");
+			System.out.println("Username: " + username);
+			System.out.println("Email: " + email);
+			System.out.println("Password: " + password);
+			System.out.println("First name: " + name);
+			System.out.println("Surname: " + surname);
+			System.out.println("Phone number: " + phNumber);
+			if (landLord == "true") {
+				System.out.println("You are a landlord");
+			}
+			if (vendor == "true") {
+				System.out.println("You are a vendor");
+			}
+			if (landLord == "false" && vendor == "false") {
+				System.out.println("You are a " + custType);
+			}
+			System.out.println("*****************************");
+			System.out.println("To verify, is all this correct? y/n");
+			option = kb.nextLine();
+			if(option.equalsIgnoreCase("y")) {
+				if (landLord == "true" || vendor == "true") {
+					addCustomer(username, email, password, name, surname, phNumber, landLord, vendor);
+					System.out.println("Welcome " + username + "!");
+					checkLogin(username, password);
+					choice = false;
+					return;
+				}
+				if (custType == "Renter") {
+					addRenter(username, email, password, name, surname, phNumber, landLord, vendor, prefSuburb);
+					System.out.println("Welcome " + username + "!");
+					checkLogin(username, password);
+					choice = false;
+					return;
+				}
+				if (custType == "Buyer") {
+					addBuyer(username, email, password, name, surname, phNumber, landLord, vendor, prefSuburb);
+					System.out.println("Welcome " + username + "!");
+					checkLogin(username, password);
+					choice = false;
+					return;
+				}
+			}
+			System.out.println("Try Again:");
 		}
-		System.out.println("   ");
-		System.out.println("*****************************");
-		System.out.println("Username: " + username);
-		System.out.println("Email: " + email);
-		System.out.println("Password: " + password);
-		System.out.println("First name: " + name);
-		System.out.println("Surname: " + surname);
-		System.out.println("Phone number: " + phNumber);
-		if (landLord == "true") {
-			System.out.println("You are a landlord");
-		}
-		if (vendor == "true") {
-			System.out.println("You are a vendor");
-		}
-		if (landLord == "false" && vendor == "false") {
-			System.out.println("You are a " + custType);
-		}
-		System.out.println("*****************************");
-		System.out.println("To verify, is all this correct? y/n");
-		option = kb.nextLine();
-		if (landLord == "true" || vendor == "true") {
-			addCustomer(username, email, password, name, surname, phNumber, landLord, vendor);
-			System.out.println("Welcome " + username + "!");
-			checkLogin(username, password);
-			return;
-		}
-		if (custType == "Renter") {
-			addRenter(username, email, password, name, surname, phNumber, landLord, vendor, prefSuburb);
-			System.out.println("Welcome " + username + "!");
-			checkLogin(username, password);
-			return;
-		}
-		if (custType == "Buyer") {
-			addBuyer(username, email, password, name, surname, phNumber, landLord, vendor, prefSuburb);
-			System.out.println("Welcome " + username + "!");
-			checkLogin(username, password);
-			return;
-		}
+		
 	}
 
 	private void createEmployee() {
 		Scanner kb = new Scanner(System.in);
 		System.out.println("Enter a username");
 		String username = kb.nextLine();
-		System.out.println("Enter a email");
+		System.out.println("Enter an email");
 		String email = kb.nextLine();
 		System.out.println("Enter a password");
 		String password = kb.nextLine();
@@ -349,7 +368,8 @@ public class RealEstateManager {
 			String phNumber, boolean workType) {
 		String empId = setEmpId();
 		Employee e = new BranchAdmin(empId, username, email, password, name, surname, phNumber, workType);
-		employeeList.add(e);
+		this.accountList[this.accountNum] = e;
+		this.accountNum += 1;
 		System.out.println("Branch Administrator created");
 	}
 
@@ -357,7 +377,8 @@ public class RealEstateManager {
 			String phNumber, boolean workType) {
 		String empId = setEmpId();
 		Employee e = new PropertyManager(empId, username, email, password, name, surname, phNumber, workType);
-		employeeList.add(e);
+		this.accountList[this.accountNum] = e;
+		this.accountNum += 1;
 		System.out.println("Property Manager created");
 	}
 
@@ -365,7 +386,8 @@ public class RealEstateManager {
 			String phNumber, boolean workType) {
 		String empId = setEmpId();
 		Employee e = new SalesConsultant(empId, username, email, password, name, surname, phNumber, workType);
-		employeeList.add(e);
+		this.accountList[this.accountNum] = e;
+		this.accountNum += 1;
 		System.out.println("Sales Consultant created");
 	}
 
@@ -756,8 +778,7 @@ public class RealEstateManager {
 					}
 				}
 			}
-			System.out.println(
-					"No property exists with that propId. Please enter a propId that exists, or enter 0 to exit");
+			System.out.println("No property exists with that propId. Please enter a propId that exists, or enter 0 to exit");
 			propId = sc.nextLine();
 			if (propId.equals("0"))
 				choice = false;
