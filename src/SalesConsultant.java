@@ -5,4 +5,16 @@ public class SalesConsultant extends Employee {
 		super(empId, username, email, password, name, surname, phNumber, workType);
 	}
 	
+	public void advertiseProp(Property p) {
+		System.out.println("Property " + p.getPropId() + " will be advertised shortly");
+	}
+	
+	public void organiseDoc() {
+		System.out.println("Document Prepared");
+	}
+	
+	public void facilitateNegotiations() {
+		System.out.println("Negotiations underway");
+	}
+	
 }
