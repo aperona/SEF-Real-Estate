@@ -19,9 +19,75 @@ public class RealEstateManager {
 		this.propertyNum = 0;
 		this.accessAccount = 0;
 		loadAccountData("accountData.csv");
+		loadPropertyData("propertyData.csv");
 		startLogin();
 		saveAccountData("accountData.csv");
+		savePropertyData("propertyData.csv");
 		return;
+	}
+
+	private void loadPropertyData(String file) {
+		try {
+			BufferedReader load = new BufferedReader(new FileReader(file));
+			String input = "";
+			input = load.readLine();
+			while (input != null) {
+				String[] fields = input.split(",");
+			
+				
+				Double price = Double.parseDouble(fields[7]);
+				int bedrooms = Integer.parseInt(fields[3]);
+				int bathrooms = Integer.parseInt(fields[4]);
+				int carSpaces = Integer.parseInt(fields[5]);
+				if (price < 5000) {
+					Property p = new Rental(fields[0], fields[1], fields[2], bedrooms, bathrooms, carSpaces, fields[6], price);
+					propertyList.add(p);
+				
+				}else {
+					Property p = new Sale(fields[0], fields[1], fields[2], bedrooms, bathrooms, carSpaces, fields[6], price);
+					propertyList.add(p);
+				}
+
+				input = load.readLine();
+			}
+			
+			load.close();
+		}
+
+		catch (Exception e) {
+			System.out.println("Error! " + e.getMessage() + "\n No property data found");
+
+		}
+		return;
+
+	}
+
+	private void savePropertyData(String file) {
+
+		try {
+			BufferedWriter save = new BufferedWriter(new FileWriter(file));
+
+			save.write(listPropertiesString());
+
+			save.close();
+		} catch (IOException e) {
+			System.out.println("Error!" + e.getMessage() + "\nWas unable to save to file");
+		}
+		return;
+	}
+
+	private String listPropertiesString() {
+		String details = "";
+		for (Property p : propertyList) {
+			if(p instanceof Rental) {
+			details += ((Rental) p).getDetailsRental();
+			details += "\n";
+			}else {
+				details += ((Sale) p).getDetailsSave();
+				details += "\n";
+			}
+		}
+		return details;
 	}
 
 	private void loadAccountData(String file) {
@@ -34,19 +100,47 @@ public class RealEstateManager {
 
 				// reads the data to find which person the data belongs to field[2] contains the
 				// name of the subclass
-				if (fields[2].equals("Customer")) {
+				if (fields[3].equals("Customer")) {
 					addCustomer(fields[0], fields[1], fields[2], fields[4], fields[5], fields[6], fields[7], fields[8]);
 					((Customer) this.accountList[this.accountNum - 1]).setType(fields[3]);
 				}
+<<<<<<<
+
+=======
+				
+				
+				if (fields[0].equals("BranchAdmin")) {
+					Boolean work = Boolean.parseBoolean(fields[7]);
+					addBranchAdmin(fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], work);
+				}
+				if (fields[0].equals("PropertyManager")) {
+					Boolean work = Boolean.parseBoolean(fields[7]);
+					addPropertyManager(fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], work);
+				}
+				if (fields[0].equals("SalesConsultant")) {
+					Boolean work = Boolean.parseBoolean(fields[7]);
+					addSalesConsultant(fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], work);
+				}
+			
+>>>>>>>
 				input = load.readLine();
 			}
 
 			load.close();
 		}
+<<<<<<<
 		// if there is no person data available the program assumes that it is being ran
 		// for the first time
+=======
+
+>>>>>>>
 		catch (Exception e) {
 			System.out.println("Error! " + e.getMessage() + "\n No account data\nCreating Admin Account");
+<<<<<<<
+
+=======
+			createEmployee();
+>>>>>>>
 		}
 		return;
 	}
@@ -56,8 +150,16 @@ public class RealEstateManager {
 		try {
 			BufferedWriter save = new BufferedWriter(new FileWriter(file));
 			int i = 0;
-			while (i < this.accountNum) {
+			while (i < this.accountNum) { 
+				if (this.accountList[i] instanceof BranchAdmin) {
+					save.write("BranchAdmin,"+this.accountList[i] + "\n");
+				}	else if (this.accountList[i] instanceof PropertyManager) {
+					save.write("PropertyManager,"+this.accountList[i] + "\n");
+				}else if (this.accountList[i] instanceof SalesConsultant) {
+					save.write("SalesConsultant,"+this.accountList[i] + "\n");
+				}else if(this.accountList[i] instanceof Customer) {
 				save.write(this.accountList[i] + "\n");
+				}
 				i++;
 			}
 			save.close();
@@ -70,6 +172,7 @@ public class RealEstateManager {
 	private void startLogin() {
 		Scanner kb = new Scanner(System.in);
 ////		TODO: Remove this
+<<<<<<<
 		addCustomer("a", "a", "a", "a", "a", "a", "a", "a");
 		addSale("1 a lane", "Melbourne", 0, 0, 0, "House", 600000);
 		addSale("2 lo street", "Melbourne", 0, 0, 0, "House", 750000);
@@ -89,6 +192,27 @@ public class RealEstateManager {
 		addRental("500 nepean highway", "Richmond", 1, 1, 1, "Unit", 450);
 		addRental("17 err place", "Richmond", 1, 1, 1, "Unit", 600);
 		String menu = "Login\nPlease Make a Selection:\n1. Login\n2. Create Customer Account \n3. Create Employee Account\nTo locate account details \nplease talk to one of our staff";
+=======
+//		addCustomer("a", "a", "a", "a", "a", "a", "y", "y");
+////		addSale("1 a lane", "Melbourne", 0, 0, 0, "House", 600000);
+////		addSale("2 lo street", "Melbourne", 0, 0, 0, "House", 750000);
+////		addSale("3 hi street", "Fitzroy", 1, 1, 1, "Flat", 900000);
+////		addSale("4 co street", "Melbourne", 2, 2, 2, "Unit", 100000);
+////		addSale("15 dave road", "Melbourne", 3, 3, 3, "TownHouse", 200000);
+////		addSale("6 ree road", "North Melbourne", 0, 0, 0, "Studio", 400000);
+////		addRental("1000 koi place", "Richmond", 1, 1, 1, "Unit", 600);
+////		addRental("11 bat street", "Batman", 1, 1, 1, "House", 500);
+////		addRental("15 two grove", "Richmond", 1, 1, 1, "Flat", 400);
+////		addRental("2 a road", "Richmond", 1, 1, 1, "TownHouse", 300);
+////		addRental("20 joe Lane", "Hawksburn", 1, 2, 0, "Studio", 200);
+////		addRental("60 the Road", "Brunswick", 1, 1, 1, "Unit", 100);
+////		addRental("16 super lane", "Richmond", 1, 1, 1, "Unit", 700);
+////		addRental("88 pie lane", "Shepparton", 1, 1, 1, "Unit", 800);
+////		addRental("105 street street", "Frankston", 1, 1, 1, "Unit", 250);
+////		addRental("500 nepean highway", "Richmond", 1, 1, 1, "Unit", 450);
+////		addRental("17 err place", "Richmond", 1, 1, 1, "Unit", 600);
+		String menu = "Login\nPlease Make a Selection:\n1. Login\n2. Create Account\nTo locate account details \nplease talk to one of our staff\nType 0 to close application";
+>>>>>>>
 		System.out.println(menu);
 		int option = kb.nextInt();
 		// as long as a user doesn't cancel it the menu will appear
@@ -157,7 +281,7 @@ public class RealEstateManager {
 					openMenu();
 
 				}
-				if ((this.accountList[i]) instanceof Employee) {
+				if ((this.accountList[i]) instanceof Employee||(this.accountList[i]) instanceof BranchAdmin||(this.accountList[i]) instanceof PropertyManager||(this.accountList[i]) instanceof SalesConsultant) {
 					// accessLevel = 1;
 					accessAccount = i;
 					openEmployeeMenu();
@@ -222,14 +346,14 @@ public class RealEstateManager {
 
 	private void accountManager() {
 		Scanner kb = new Scanner(System.in);
-		String menu = "Account Management\nPlease Make a Selection:\n1. Apply to be a vendor\nApply to be a landlord\nType 0 to log out";
+		String menu = "Account Management\nPlease Make a Selection:\n1. Create new Employee account\nType 0 to log out";
 		System.out.println(menu);
 		int option = kb.nextInt();
 		// as long as a user doesn't cancel it the menu will appear
 
 		while (option != 0) {
 			if (option == 1) {
-
+				createEmployee();
 			} else if (option == 2) {
 
 			} else {
@@ -242,6 +366,7 @@ public class RealEstateManager {
 	}
 
 	private void createCustomer() {
+<<<<<<<
 		boolean choice = true;
 		while(choice) {
 			String custType = null;
@@ -327,8 +452,40 @@ public class RealEstateManager {
 				}
 			}
 			System.out.println("Try Again:");
+=======
+		Scanner kb = new Scanner(System.in);
+		System.out.println("Enter a username");
+		String username = kb.nextLine();
+		System.out.println("Enter a email");
+		String email = kb.nextLine();
+		System.out.println("Enter a password");
+		String password = kb.nextLine();
+		System.out.println("Enter your first name");
+		String name = kb.nextLine();
+		System.out.println("Enter your surname");
+		String surname = kb.nextLine();
+		System.out.println("Enter your phone number");
+		String phNumber = kb.nextLine();
+		System.out.println("Are you a landlord y/n");
+		String option = kb.nextLine();
+		String landLord = "false";
+		if (option.matches("y")) {
+			landLord = "true";
+>>>>>>>
 		}
+<<<<<<<
 		
+=======
+		System.out.println("Are you a vendor y/n");
+		option = kb.nextLine();
+		String vendor = "false";
+		if (option.matches("y")) {
+			vendor = "true";
+		}
+		addCustomer(username, email, password, name, surname, phNumber, landLord, vendor);
+		return;
+
+>>>>>>>
 	}
 
 	private void createEmployee() {
@@ -367,27 +524,44 @@ public class RealEstateManager {
 	private void addBranchAdmin(String username, String email, String password, String name, String surname,
 			String phNumber, boolean workType) {
 		String empId = setEmpId();
+<<<<<<<
 		Employee e = new BranchAdmin(empId, username, email, password, name, surname, phNumber, workType);
 		this.accountList[this.accountNum] = e;
 		this.accountNum += 1;
+=======
+		this.accountList[this.accountNum] = new BranchAdmin(empId, username, email, password, name, surname, phNumber, workType);
+		this.accountNum += 1;
+>>>>>>>
 		System.out.println("Branch Administrator created");
 	}
 
 	private void addPropertyManager(String username, String email, String password, String name, String surname,
 			String phNumber, boolean workType) {
 		String empId = setEmpId();
+<<<<<<<
 		Employee e = new PropertyManager(empId, username, email, password, name, surname, phNumber, workType);
 		this.accountList[this.accountNum] = e;
 		this.accountNum += 1;
+=======
+		this.accountList[this.accountNum] = new PropertyManager(empId, username, email, password, name, surname, phNumber, workType);
+		this.accountNum += 1;
+>>>>>>>
 		System.out.println("Property Manager created");
 	}
 
 	private void addSalesConsultant(String username, String email, String password, String name, String surname,
 			String phNumber, boolean workType) {
 		String empId = setEmpId();
+<<<<<<<
 		Employee e = new SalesConsultant(empId, username, email, password, name, surname, phNumber, workType);
 		this.accountList[this.accountNum] = e;
 		this.accountNum += 1;
+=======
+		
+		
+		this.accountList[this.accountNum] = new SalesConsultant(empId, username, email, password, name, surname, phNumber, workType);
+		this.accountNum += 1;
+>>>>>>>
 		System.out.println("Sales Consultant created");
 	}
 
@@ -403,10 +577,11 @@ public class RealEstateManager {
 		this.accountList[this.accountNum] = new Customer(username, email, password, name, surname, phNumber, landLord,
 				vendor);
 		this.accountNum += 1;
-
+		System.out.println("Customer created");
 		return;
 
 	}
+<<<<<<<
 
 	private void addBuyer(String username, String email, String password, String name, String surname, String phNumber,
 			String landLord, String vendor, String prefSuburb) {
@@ -428,6 +603,9 @@ public class RealEstateManager {
 
 	}
 
+=======
+
+>>>>>>>
 	private void makeProperty() {
 		Scanner sc = new Scanner(System.in);
 		String propType;
@@ -778,7 +956,8 @@ public class RealEstateManager {
 					}
 				}
 			}
-			System.out.println("No property exists with that propId. Please enter a propId that exists, or enter 0 to exit");
+			System.out.println(
+					"No property exists with that propId. Please enter a propId that exists, or enter 0 to exit");
 			propId = sc.nextLine();
 			if (propId.equals("0"))
 				choice = false;
